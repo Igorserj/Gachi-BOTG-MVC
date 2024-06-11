@@ -50,5 +50,6 @@
         <file>views/entities/Entity.qml</file>
         <file>views/entities/Enemy.qml</file>
         <file>controllers/entitiesPackController.js</file>
+        <file>controllers/entityController.js</file>
     </qresource>
 </RCC>
