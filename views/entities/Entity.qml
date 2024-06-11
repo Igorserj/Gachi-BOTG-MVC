@@ -1,60 +1,128 @@
 import QtQuick
+import "../../controllers/entityController.js" as Controller
 
 Rectangle {
     id: entity
-    property double deltaX: 0
-    property double deltaY: 0
+    property double deltaX: 50 / 250 / 0.06
+    property double deltaY: 50 / 250 / 0.06
+    readonly property var controller: Controller
+    readonly property double animationDuration: 1 / 0.06
     height: 1 / 11 * window.height
     width: height
 
     SequentialAnimation {
-        id: verticalAnimation
+        id: moveLeftAnimation
         PropertyAnimation {
             target: entity
-            property: "y"
-            to: entity.y + deltaY
-            duration: 250
+            property: "x"
+            to: entity.x - deltaX
+            duration: animationDuration
         }
-        // onFinished: deltaY = 0
+        ScriptAction {
+            script: {
+                cycleMoveLeftAnimation.start()
+            }
+        }
     }
     SequentialAnimation {
-        id: horizontalAnimation
+        id: cycleMoveLeftAnimation
+        PropertyAnimation {
+            target: entity
+            property: "x"
+            to: entity.x - deltaX
+            duration: animationDuration
+        }
+        ScriptAction {
+            script: {
+                moveLeftAnimation.start()
+            }
+        }
+    }
+
+    SequentialAnimation {
+        id: moveRightAnimation
         PropertyAnimation {
             target: entity
             property: "x"
             to: entity.x + deltaX
-            duration: 250
+            duration: animationDuration
         }
-        // onFinished: deltaX = 0
+        ScriptAction {
+            script: {
+                cycleMoveRightAnimation.start()
+            }
+        }
+    }
+    SequentialAnimation {
+        id: cycleMoveRightAnimation
+        PropertyAnimation {
+            target: entity
+            property: "x"
+            to: entity.x + deltaX
+            duration: animationDuration
+        }
+        ScriptAction {
+            script: {
+                moveRightAnimation.start()
+            }
+        }
     }
 
-    function moveUp() {
-        deltaY = -50
-        verticalAnimation.running = true
+    SequentialAnimation {
+        id: moveUpAnimation
+        PropertyAnimation {
+            target: entity
+            property: "y"
+            to: entity.y - deltaY
+            duration: animationDuration
+        }
+        ScriptAction {
+            script: {
+                cycleMoveUpAnimation.start()
+            }
+        }
+    }
+    SequentialAnimation {
+        id: cycleMoveUpAnimation
+        PropertyAnimation {
+            target: entity
+            property: "y"
+            to: entity.y - deltaY
+            duration: animationDuration
+        }
+        ScriptAction {
+            script: {
+                moveUpAnimation.start()
+            }
+        }
     }
 
-    function moveDown() {
-        deltaY = +50
-        verticalAnimation.running = true
+    SequentialAnimation {
+        id: moveDownAnimation
+        PropertyAnimation {
+            target: entity
+            property: "y"
+            to: entity.y + deltaY
+            duration: animationDuration
+        }
+        ScriptAction {
+            script: {
+                cycleMoveDownAnimation.start()
+            }
+        }
     }
-
-    function moveLeft() {
-        deltaX = -50
-        horizontalAnimation.running = true
-    }
-
-    function moveRight() {
-        deltaX = +50
-        horizontalAnimation.running = true
-    }
-
-    function stopHorizontalMove() {
-        deltaX = 0
-        // horizontalAnimation.stop()
-    }
-
-    function stopVerticalMove() {
-        deltaY = 0
-        // verticalAnimation.stop()
+    SequentialAnimation {
+        id: cycleMoveDownAnimation
+        PropertyAnimation {
+            target: entity
+            property: "y"
+            to: entity.y + deltaY
+            duration: animationDuration
+        }
+        ScriptAction {
+            script: {
+                moveDownAnimation.start()
+            }
+        }
     }
 }

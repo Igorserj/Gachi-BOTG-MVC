@@ -86,38 +86,26 @@ function keyAction(key, code, isAutoRepeat) {
     } else if (/*key === Qt.Key_M*/code === 58) {
         openMap()
     } else if (/*key === Qt.Key_W*/code === 25) {
-        hero.moveUp()
+        hero.controller.moveUp()
     } else if (/*key === Qt.Key_S*/code === 39) {
-        hero.moveDown()
+        hero.controller.moveDown()
     } else if (/*key === Qt.Key_A*/code === 38) {
-        hero.moveLeft()
+        hero.controller.moveLeft()
     } else if (/*key === Qt.Key_D*/code === 40) {
-        hero.moveRight()
+        hero.controller.moveRight()
     }
-    // else if (code === 40 && !isAutoRepeat) {
-    //     hero.stopHorizontalMove()
-    // }
-    // else if (code === 39 && !isAutoRepeat) {
-    //     hero.stopVerticalMove()
-    // }
-    // else if (code === 38 && !isAutoRepeat) {
-    //     hero.stopHorizontalMove()
-    // }
-    // else if (code === 25 && !isAutoRepeat) {
-    //     hero.stopVerticalMove()
-    // }
 }
 
 function keyReleaseAction(key, code, isAutoRepeat) {
     if (!isAutoRepeat) {
         if (code === 25) {
-            hero.stopVerticalMove()
+            hero.controller.stopMoveUp()
         } else if (code === 39) {
-            hero.stopVerticalMove()
+            hero.controller.stopMoveDown()
         } else if (code === 38) {
-            hero.stopHorizontalMove()
+            hero.controller.stopMoveLeft()
         } else if (code === 40) {
-            hero.stopHorizontalMove()
+            hero.controller.stopMoveRight()
         }
     }
 }
@@ -218,15 +206,4 @@ function mapElementGetText(type, mapLayer, identifier) {
         }
     }
     return text
-}
-
-function moveHero(direction) {
-    if (direction === "right")
-        hero.x += 10
-    else if (direction === "down")
-        hero.y += 10
-    else if (direction === "left")
-        hero.x -= 10
-    else if (direction === "up")
-        hero.y -= 10
 }
