@@ -1,11 +1,11 @@
 function actionMainGUI() {
     model = mainGUIModel
-    guiLoader.source = routes.views[0].gui + "/MainGUI.qml"
+    guiLoader.source = `${routes.views[0].gui}/MainGUI.qml`
 }
 
 function actionMenu() {
     model = menuModel
-    guiLoader.source = routes.views[0].gui + "/Menu.qml"
+    guiLoader.source = `${routes.views[0].gui}/Menu.qml`
 }
 
 function actionContinue() {
@@ -14,11 +14,10 @@ function actionContinue() {
 
 function actionSettings() {
     model = settingsModel
-    guiLoader.source = routes.views[0].gui + "/Settings.qml"
+    guiLoader.source = `${routes.views[0].gui}/Settings.qml`
 }
 
-function actionDebug() {
-}
+function actionDebug() {}
 
 function actionMainMenu() {
     mainLoader.source = routes.resources[0].mainMenu
@@ -32,9 +31,8 @@ function actionInventory() {
     if (!!addLoader) {
         if (addLoader.status === Loader.Null) {
             addModel = inventoryModel
-            addLoader.source = routes.views[0].gui + "/Inventory.qml"
-        }
-        else if (addLoader.status === Loader.Ready) {
+            addLoader.source = `${routes.views[0].gui}/Inventory.qml`
+        } else if (addLoader.status === Loader.Ready) {
             addLoader.sourceComponent = undefined
             addModel = undefined
         }
@@ -48,31 +46,33 @@ function invRefAssign(item) {
 function cellsAlignments(index, item) {
     if (index === 0) {
         item.y = (window.height - item.height) / 2
-    }
-    else if (index === 1) {
+    } else if (index === 1) {
         item.y = window.height - item.height
-    }
-    else if (index === 2) {
+    } else if (index === 2) {
         item.x = window.width - item.width
         item.y = (window.height - item.height) / 2
-    }
-    else if (index === 3) {
+    } else if (index === 3) {
         item.x = window.width - item.width
         item.y = window.height - item.height
     }
 }
 
 function menuButtons(index) {
-    if (index === 0) actionContinue()
-    else if (index === 1) actionSettings()
-    else if (index === 2) actionDebug()
-    else if (index === 3) actionMainMenu()
-    else if (index === 4) actionQuit()
+    if (index === 0) {
+        actionContinue()
+    } else if (index === 1) {
+        actionSettings()
+    } else if (index === 2) {
+        actionDebug()
+    } else if (index === 3) {
+        actionMainMenu()
+    } else if (index === 4) {
+        actionQuit()
+    }
 }
 
 function settingsButtons(index) {
-    if (index === 0) {}
-    else if (index === 4) {
+    if (index === 4) {
         actionMenu()
     }
 }
@@ -81,18 +81,18 @@ function keyAction(key, code, isAutoRepeat) {
     console.log(code)
     if (key === Qt.Key_Escape) {
         actionMenu()
-    } else if (/*key === Qt.Key_I*/code === 31) {
+    } else if (/*key === Qt.Key_I*/ code === 31) {
         actionInventory()
-    } else if (/*key === Qt.Key_M*/code === 58) {
+    } else if (/*key === Qt.Key_M*/ code === 58) {
         openMap()
-    } else if (/*key === Qt.Key_W*/code === 25) {
-        hero.controller.moveUp()
-    } else if (/*key === Qt.Key_S*/code === 39) {
-        hero.controller.moveDown()
-    } else if (/*key === Qt.Key_A*/code === 38) {
-        hero.controller.moveLeft()
-    } else if (/*key === Qt.Key_D*/code === 40) {
-        hero.controller.moveRight()
+    } else if (/*key === Qt.Key_W*/ code === 25) {
+        hero.controller.collisionsDetect("up")
+    } else if (/*key === Qt.Key_S*/ code === 39) {
+        hero.controller.collisionsDetect("down")
+    } else if (/*key === Qt.Key_A*/ code === 38) {
+        hero.controller.collisionsDetect("left")
+    } else if (/*key === Qt.Key_D*/ code === 40) {
+        hero.controller.collisionsDetect("right")
     }
 }
 
@@ -119,9 +119,8 @@ function openMap() {
     if (!!addLoader) {
         if (addLoader.status === Loader.Null) {
             addModel = mapModel
-            addLoader.source = routes.views[0].gui + "/Map.qml"
-        }
-        else if (addLoader.status === Loader.Ready) {
+            addLoader.source = `${routes.views[0].gui}/Map.qml`
+        } else if (addLoader.status === Loader.Ready) {
             addLoader.sourceComponent = undefined
             addModel = undefined
         }
@@ -130,30 +129,34 @@ function openMap() {
 
 function mapElementGetX(mapLayer, index) {
     const poses = Object.values(addModel.get(mapLayer).poses.get(index))
-    if (poses[2] - poses[0] === 1)
+    if (poses[2] - poses[0] === 1) {
         return poses[0] * window.height / 20 + (window.height / 20 - width)
-    else
+    } else{
         return poses[0] * window.height / 20
+    }
 }
 
 function mapElementGetY(mapLayer, index) {
     const poses = Object.values(addModel.get(mapLayer).poses.get(index))
-    if (poses[3] - poses[1] === 1)
+    if (poses[3] - poses[1] === 1) {
         return poses[1] * window.height / 20 + (window.height / 20 - height)
-    else
+    } else {
         return poses[1] * window.height / 20
+    }
 }
 
 function mapElementGetHeight(type, mapLayer, identifier) {
     switch (type) {
-    case "vertical pass": return window.height / 160
+    case "vertical pass":
+        return window.height / 160
     default:
         const connects = addModel.get(mapLayer).connects
-        for (let i = 0; i < connects.count; ++i) {
-            if (identifier === connects.get(i).identifier && connects.get(i).type === "to top") {
+        for (var i = 0; i < connects.count; ++i) {
+            if (identifier === connects.get(i).identifier
+                    && connects.get(i).type === "to top") {
                 return 0
-            }
-            else if (identifier === connects.get(i).identifier && connects.get(i).type === "to bottom") {
+            } else if (identifier === connects.get(i).identifier
+                       && connects.get(i).type === "to bottom") {
                 return window.height / 10
             }
         }
@@ -163,14 +166,16 @@ function mapElementGetHeight(type, mapLayer, identifier) {
 
 function mapElementGetWidth(type, mapLayer, identifier) {
     switch (type) {
-    case "horizontal pass": return window.height / 160
+    case "horizontal pass":
+        return window.height / 160
     default:
         const connects = addModel.get(mapLayer).connects
-        for (let i = 0; i < connects.count; ++i) {
-            if (identifier === connects.get(i).identifier && connects.get(i).type === "to left") {
+        for (var i = 0; i < connects.count; ++i) {
+            if (identifier === connects.get(i).identifier
+                    && connects.get(i).type === "to left") {
                 return 0
-            }
-            else if (identifier === connects.get(i).identifier && connects.get(i).type === "to right") {
+            } else if (identifier === connects.get(i).identifier
+                       && connects.get(i).type === "to right") {
                 return window.height / 10
             }
         }
@@ -180,28 +185,29 @@ function mapElementGetWidth(type, mapLayer, identifier) {
 
 function mapElementGetText(type, mapLayer, identifier) {
     let text = ""
-    if (type === "horizontal pass" || type === "vertical pass")
+    if (type === "horizontal pass" || type === "vertical pass") {
         text = ""
-    else
+    } else {
         text = identifier
+    }
 
-    if (type === "crossnode")
+    if (type === "crossnode") {
         text += "c"
-    else if (type === "entrynode")
+    } else if (type === "entrynode") {
         text += "e"
-    else if (type === "entry")
+    } else if (type === "entry") {
         text += ">"
-    else if (type === "exit")
+    } else if (type === "exit") {
         text += "^"
-    else
+    } else {
         text += ""
+    }
 
     const connects = addModel.get(mapLayer).connects
     for (let i = 0; i < connects.count; ++i) {
         if (identifier === connects.get(i).identifier && connects.get(i).type === "to left") {
             text = ""
-        }
-        else if (identifier === connects.get(i).identifier && connects.get(i).type === "to top") {
+        } else if (identifier === connects.get(i).identifier && connects.get(i).type === "to top") {
             text = ""
         }
     }

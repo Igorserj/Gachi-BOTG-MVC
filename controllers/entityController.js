@@ -20,17 +20,31 @@ function moveRight() {
 
 function stopMoveLeft() {
     moveLeftAnimation.stop()
-    cycleMoveLeftAnimation.stop()
+    // cycleMoveLeftAnimation.stop()
 }
 function stopMoveRight() {
     moveRightAnimation.stop()
-    cycleMoveRightAnimation.stop()
+    // cycleMoveRightAnimation.stop()
 }
 function stopMoveUp() {
     moveUpAnimation.stop()
-    cycleMoveUpAnimation.stop()
+    // cycleMoveUpAnimation.stop()
 }
 function stopMoveDown() {
     moveDownAnimation.stop()
-    cycleMoveDownAnimation.stop()
+    // cycleMoveDownAnimation.stop()
+}
+
+function collisionsDetect(dir) {
+    collisionDetectScript.sendMessage({
+                                          "entityX": collider.x,
+                                          "entityY": collider.y,
+                                          "entityHeight": collider.height,
+                                          "entityWidth": collider.width,
+                                          "index": entity.index,
+                                          "model": colliderModel,
+                                          "direction": dir,
+                                          "distance": distance,
+                                          "duration": baseAnimationDuration
+                                      })
 }

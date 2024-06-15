@@ -15,7 +15,6 @@ Item {
             border.color: "black"
             color: type === "horizontal pass" || type === "vertical pass" ? "black" : "transparent"
             radius: type === "entry" || type === "exit" || type === "block" || type === "horizontal pass" || type === "vertical pass" ? 0 : height / 3
-            // Component.onCompleted: console.log((Object.values(addModel.get(mapLayer).poses.get(index))[2] - Object.values(addModel.get(mapLayer).poses.get(index))[0]))
             Text {
                 anchors.centerIn: parent
                 text: controller.mapElementGetText(type, mapLayer, identifier)
