@@ -18,50 +18,45 @@ WorkerScript.onMessage = function (message) {
     let deltaX = []
     let deltaY = []
     const baseDuration = message.duration
-    let closestIds = {
-        "x": -1,
-        "y": -1
-    }
-
-    let horizontalDistance = -1
-    let verticalDistance = -1
 
     let item
     let itemIndex
 
-    for (var i = 0; i < model.count; ++i) {
-        item = model.get(i).item
-        itemIndex = model.get(i).index
-        lowerBound = entityY - distance <= item.y + item.height
-        upperBound = entityY + entityHeight + distance >= item.y
-        rightBound = entityX - distance <= item.x + item.width
-        leftBound = entityX + entityWidth + distance >= item.x
+    for (let i = 0; i < model.count; ++i) {
+        if (model.get(i).type !== 'Enemy' && model.get(i).type !== 'Hero') {
+            item = model.get(i).item
+            itemIndex = model.get(i).index
+            lowerBound = entityY - distance <= item.y + item.height
+            upperBound = entityY + entityHeight + distance >= item.y
+            rightBound = entityX - distance <= item.x + item.width
+            leftBound = entityX + entityWidth + distance >= item.x
 
-        horizontalBound = entityX + entityWidth >= item.x && entityX <= item.x + item.width
-        verticalBound = entityY + entityHeight >= item.y && entityY <= item.y + item.height
+            horizontalBound = entityX + entityWidth > item.x && entityX < item.x + item.width
+            verticalBound = entityY + entityHeight > item.y && entityY < item.y + item.height
 
-        if (verticalBound && leftBound && rightBound && index !== itemIndex
-                && (direction === "left" || direction === "right")) {
-            if (entityX + entityWidth / 2 + distance > item.x + item.width / 2
-                    && direction === "left") {
-                deltaX.push(Math.abs(entityX - (item.x + item.width)))
-            } else if (entityX + entityWidth / 2 - distance <= item.x + item.width / 2
-                       && direction === "right") {
-                deltaX.push(Math.abs((entityX + entityWidth) - item.x))
+            if (verticalBound && leftBound && rightBound && index !== itemIndex
+                    && (direction === "left" || direction === "right")) {
+                if (entityX + entityWidth / 2 + distance > item.x + item.width / 2
+                        && direction === "left") {
+                    deltaX.push(Math.abs(entityX - (item.x + item.width)))
+                } else if (entityX + entityWidth / 2 - distance <= item.x + item.width / 2
+                           && direction === "right") {
+                    deltaX.push(Math.abs((entityX + entityWidth) - item.x))
+                }
+            } else if (horizontalBound && upperBound && lowerBound && index !== itemIndex
+                       && (direction === "up" || direction === "down")) {
+                if (entityY + entityHeight / 2 + distance > item.y + item.height / 2
+                        && direction === "up") {
+                    deltaY.push(Math.abs(entityY - (item.y + item.height)))
+                } else if (entityY + entityHeight / 2 - distance <= item.y + item.height / 2
+                           && direction === "down") {
+                    deltaY.push(Math.abs((entityY + entityHeight) - item.y))
+                }
+            } else if (direction === "up" || direction === "down") {
+                deltaY.push(distance)
+            } else if (direction === "right" || direction === "left") {
+                deltaX.push(distance)
             }
-        } else if (horizontalBound && upperBound && lowerBound && index !== itemIndex
-                   && (direction === "up" || direction === "down")) {
-            if (entityY + entityHeight / 2 + distance > item.y + item.height / 2
-                    && direction === "up") {
-                deltaY.push(Math.abs(entityY - (item.y + item.height)))
-            } else if (entityY + entityHeight / 2 - distance <= item.y + item.height / 2
-                       && direction === "down") {
-                deltaY.push(Math.abs((entityY + entityHeight) - item.y))
-            }
-        } else if (direction === "up" || direction === "down") {
-            deltaY.push(distance)
-        } else if (direction === "right" || direction === "left") {
-            deltaX.push(distance)
         }
     }
 

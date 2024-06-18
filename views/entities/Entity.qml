@@ -1,4 +1,4 @@
-import QtQuick
+import QtQuick 2.15
 import "../../controllers/entityController.js" as Controller
 
 Item {
@@ -10,6 +10,12 @@ Item {
     property double durationX: 0
     property double durationY: 0
     property double baseAnimationDuration: 250
+
+    property bool allowUp: false
+    property bool allowDown: false
+    property bool allowLeft: false
+    property bool allowRight: false
+
     height: 1 / 11 * window.height
     width: height
 
@@ -29,27 +35,9 @@ Item {
                 to: entity.x - deltaX
                 duration: durationX
             }
-            // ScriptAction {
-            //     script: {
-            //         cycleMoveLeftAnimation.start()
-            //     }
-            // }
+            onFinished: if (allowLeft) Controller.collisionsDetect("left")
         }
 
-        // SequentialAnimation {
-        //     id: cycleMoveLeftAnimation
-        //     PropertyAnimation {
-        //         target: entity
-        //         property: "x"
-        //         to: entity.x - deltaX
-        //         duration: animationDuration
-        //     }
-        //     ScriptAction {
-        //         script: {
-        //             moveLeftAnimation.start()
-        //         }
-        //     }
-        // }
         SequentialAnimation {
             id: moveRightAnimation
             PropertyAnimation {
@@ -58,27 +46,9 @@ Item {
                 to: entity.x + deltaX
                 duration: durationX
             }
-            // ScriptAction {
-            //     script: {
-            //         cycleMoveRightAnimation.start()
-            //     }
-            // }
+            onFinished: if (allowRight) Controller.collisionsDetect("right")
         }
 
-        // SequentialAnimation {
-        //     id: cycleMoveRightAnimation
-        //     PropertyAnimation {
-        //         target: entity
-        //         property: "x"
-        //         to: entity.x + deltaX
-        //         duration: animationDuration
-        //     }
-        //     ScriptAction {
-        //         script: {
-        //             moveRightAnimation.start()
-        //         }
-        //     }
-        // }
         SequentialAnimation {
             id: moveUpAnimation
             PropertyAnimation {
@@ -87,27 +57,9 @@ Item {
                 to: entity.y - deltaY
                 duration: durationY
             }
-            // ScriptAction {
-            //     script: {
-            //         cycleMoveUpAnimation.start()
-            //     }
-            // }
+            onFinished: if (allowUp) Controller.collisionsDetect("up")
         }
 
-        // SequentialAnimation {
-        //     id: cycleMoveUpAnimation
-        //     PropertyAnimation {
-        //         target: entity
-        //         property: "y"
-        //         to: entity.y - deltaY
-        //         duration: animationDuration
-        //     }
-        //     ScriptAction {
-        //         script: {
-        //             moveUpAnimation.start()
-        //         }
-        //     }
-        // }
         SequentialAnimation {
             id: moveDownAnimation
             PropertyAnimation {
@@ -116,26 +68,8 @@ Item {
                 to: entity.y + deltaY
                 duration: durationY
             }
-            // ScriptAction {
-            //     script: {
-            //         cycleMoveDownAnimation.start()
-            //     }
-            // }
+            onFinished: if (allowDown) Controller.collisionsDetect("down")
         }
-        // SequentialAnimation {
-        //     id: cycleMoveDownAnimation
-        //     PropertyAnimation {
-        //         target: entity
-        //         property: "y"
-        //         to: entity.y + deltaY
-        //         duration: animationDuration
-        //     }
-        //     ScriptAction {
-        //         script: {
-        //             moveDownAnimation.start()
-        //         }
-        //     }
-        // }
     }
     Collider {
         id: collider
@@ -144,27 +78,8 @@ Item {
 
     WorkerScript {
         id: collisionDetectScript
+        property bool busy: false
         source: `${routes.controllers[0].root}/entityColliderController.mjs`
-        onMessage: messageObject => {
-                       const direction = messageObject.direction
-
-                       if (direction === "up") {
-                           deltaY = messageObject.deltaY
-                           durationY = messageObject.durationY
-                           Controller.moveUp()
-                       } else if (direction === "down") {
-                           deltaY = messageObject.deltaY
-                           durationY = messageObject.durationY
-                           Controller.moveDown()
-                       } else if (direction === "left") {
-                           deltaX = messageObject.deltaX
-                           durationX = messageObject.durationX
-                           Controller.moveLeft()
-                       } else if (direction === "right") {
-                           deltaX = messageObject.deltaX
-                           durationX = messageObject.durationX
-                           Controller.moveRight()
-                       }
-                   }
+        onMessage: messageObject => Controller.collisionsDetectMessage(messageObject)
     }
 }

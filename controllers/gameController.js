@@ -86,12 +86,20 @@ function keyAction(key, code, isAutoRepeat) {
     } else if (/*key === Qt.Key_M*/ code === 58) {
         openMap()
     } else if (/*key === Qt.Key_W*/ code === 25) {
+        hero.parent.allowDown = false
+        hero.parent.allowUp = true
         hero.controller.collisionsDetect("up")
     } else if (/*key === Qt.Key_S*/ code === 39) {
+        hero.parent.allowUp = false
+        hero.parent.allowDown = true
         hero.controller.collisionsDetect("down")
     } else if (/*key === Qt.Key_A*/ code === 38) {
+        hero.parent.allowRight = false
+        hero.parent.allowLeft = true
         hero.controller.collisionsDetect("left")
     } else if (/*key === Qt.Key_D*/ code === 40) {
+        hero.parent.allowLeft = false
+        hero.parent.allowRight = true
         hero.controller.collisionsDetect("right")
     }
 }
@@ -99,12 +107,16 @@ function keyAction(key, code, isAutoRepeat) {
 function keyReleaseAction(key, code, isAutoRepeat) {
     if (!isAutoRepeat) {
         if (code === 25) {
+            hero.parent.allowUp = false
             hero.controller.stopMoveUp()
         } else if (code === 39) {
+            hero.parent.allowDown = false
             hero.controller.stopMoveDown()
         } else if (code === 38) {
+            hero.parent.allowLeft = false
             hero.controller.stopMoveLeft()
         } else if (code === 40) {
+            hero.parent.allowRight = false
             hero.controller.stopMoveRight()
         }
     }
