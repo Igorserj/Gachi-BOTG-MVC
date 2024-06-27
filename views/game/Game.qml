@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import "../../controllers/gameController.js" as Controller
 import "../../models/gui"
+import "../../models/game"
 
 Item {
     id: game
@@ -37,5 +38,8 @@ Item {
     }
     MapModel {
         id: mapModel
+    }
+    LevelModel {
+        id: levelModel
     }
 }

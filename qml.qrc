@@ -42,9 +42,7 @@
         <file>views/game/Generator.qml</file>
         <file>views/gui/Map.qml</file>
         <file>models/gui/MapModel.qml</file>
-        <file>views/game/Scene2.qml</file>
         <file>views/game/Scene.qml</file>
-        <file>models/game/EntityModel.qml</file>
         <file>views/entities/Hero.qml</file>
         <file>views/entities/EntitiesPack.qml</file>
         <file>views/entities/Entity.qml</file>
@@ -56,5 +54,8 @@
         <file>views/entities/VerticalWall.qml</file>
         <file>views/entities/HorizontalWall.qml</file>
         <file>controllers/entityColliderController.mjs</file>
+        <file>models/game/LevelModel.qml</file>
+        <file>views/entities/Corridor.qml</file>
+        <file>controllers/generatorController.js</file>
     </qresource>
 </RCC>
