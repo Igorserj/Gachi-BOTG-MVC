@@ -1,20 +1,20 @@
 function actionStartGame() {
     mainMenu.model = startGameModel
-    menuLoader.source = routes.views[0].mainMenu + "/StartGame.qml"
+    menuLoader.source = `${routes.views[0].mainMenu}/StartGame.qml`
 }
 
 function actionLoadGame() {
-    menuLoader.source = routes.views[0].mainMenu + "/LoadGame.qml"
+    menuLoader.source = `${routes.views[0].mainMenu}/LoadGame.qml`
 }
 
 function actionMenu() {
     mainMenu.model = menuModel
-    menuLoader.source = routes.views[0].mainMenu + "/Menu.qml"
+    menuLoader.source = `${routes.views[0].mainMenu}/Menu.qml`
 }
 
 function actionSettings() {
     mainMenu.model = settingsModel
-    menuLoader.source = routes.views[0].mainMenu + "/Settings.qml"
+    menuLoader.source = `${routes.views[0].mainMenu}/Settings.qml`
 }
 
 function actionNewGame() {

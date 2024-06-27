@@ -1,11 +1,15 @@
-import QtQuick
+import QtQuick 2.15
 import "../../controllers/entitiesPackController.js" as Controller
 
 Repeater {
+    id: entitiesPack
+    property var controller: Controller
     model: entityModel
     delegate: Loader {
         id: loader
         source: Controller.entityChooser(type)
-        onLoaded: {width = item.width; height = item.height}
+        onLoaded: {
+            Controller.entityPositioner(item.entity, type)
+        }
     }
 }

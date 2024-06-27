@@ -1,128 +1,85 @@
-import QtQuick
+import QtQuick 2.15
 import "../../controllers/entityController.js" as Controller
 
-Rectangle {
-    id: entity
-    property double deltaX: 50 / 250 / 0.06
-    property double deltaY: 50 / 250 / 0.06
-    readonly property var controller: Controller
-    readonly property double animationDuration: 1 / 0.06
+Item {
+    property alias color: entity.color
+    property alias entity: entity
+    property double deltaX: 0
+    property double deltaY: 0
+    property double distance: 50
+    property double durationX: 0
+    property double durationY: 0
+    property double baseAnimationDuration: 250
+
+    property bool allowUp: false
+    property bool allowDown: false
+    property bool allowLeft: false
+    property bool allowRight: false
+
     height: 1 / 11 * window.height
     width: height
 
-    SequentialAnimation {
-        id: moveLeftAnimation
-        PropertyAnimation {
-            target: entity
-            property: "x"
-            to: entity.x - deltaX
-            duration: animationDuration
-        }
-        ScriptAction {
-            script: {
-                cycleMoveLeftAnimation.start()
+    Rectangle {
+        id: entity
+        width: parent.width
+        height: parent.height
+        readonly property var controller: Controller
+        property string type: type
+        property int index: index
+
+        SequentialAnimation {
+            id: moveLeftAnimation
+            PropertyAnimation {
+                target: entity
+                property: "x"
+                to: entity.x - deltaX
+                duration: durationX
             }
+            onFinished: if (allowLeft) Controller.collisionsDetect("left")
+        }
+
+        SequentialAnimation {
+            id: moveRightAnimation
+            PropertyAnimation {
+                target: entity
+                property: "x"
+                to: entity.x + deltaX
+                duration: durationX
+            }
+            onFinished: if (allowRight) Controller.collisionsDetect("right")
+        }
+
+        SequentialAnimation {
+            id: moveUpAnimation
+            PropertyAnimation {
+                target: entity
+                property: "y"
+                to: entity.y - deltaY
+                duration: durationY
+            }
+            onFinished: if (allowUp) Controller.collisionsDetect("up")
+        }
+
+        SequentialAnimation {
+            id: moveDownAnimation
+            PropertyAnimation {
+                target: entity
+                property: "y"
+                to: entity.y + deltaY
+                duration: durationY
+            }
+            onFinished: if (allowDown) Controller.collisionsDetect("down")
         }
     }
-    SequentialAnimation {
-        id: cycleMoveLeftAnimation
-        PropertyAnimation {
-            target: entity
-            property: "x"
-            to: entity.x - deltaX
-            duration: animationDuration
-        }
-        ScriptAction {
-            script: {
-                moveLeftAnimation.start()
-            }
-        }
+    Collider {
+        id: collider
+        anchors.fill: entity
     }
 
-    SequentialAnimation {
-        id: moveRightAnimation
-        PropertyAnimation {
-            target: entity
-            property: "x"
-            to: entity.x + deltaX
-            duration: animationDuration
-        }
-        ScriptAction {
-            script: {
-                cycleMoveRightAnimation.start()
-            }
-        }
-    }
-    SequentialAnimation {
-        id: cycleMoveRightAnimation
-        PropertyAnimation {
-            target: entity
-            property: "x"
-            to: entity.x + deltaX
-            duration: animationDuration
-        }
-        ScriptAction {
-            script: {
-                moveRightAnimation.start()
-            }
-        }
-    }
-
-    SequentialAnimation {
-        id: moveUpAnimation
-        PropertyAnimation {
-            target: entity
-            property: "y"
-            to: entity.y - deltaY
-            duration: animationDuration
-        }
-        ScriptAction {
-            script: {
-                cycleMoveUpAnimation.start()
-            }
-        }
-    }
-    SequentialAnimation {
-        id: cycleMoveUpAnimation
-        PropertyAnimation {
-            target: entity
-            property: "y"
-            to: entity.y - deltaY
-            duration: animationDuration
-        }
-        ScriptAction {
-            script: {
-                moveUpAnimation.start()
-            }
-        }
-    }
-
-    SequentialAnimation {
-        id: moveDownAnimation
-        PropertyAnimation {
-            target: entity
-            property: "y"
-            to: entity.y + deltaY
-            duration: animationDuration
-        }
-        ScriptAction {
-            script: {
-                cycleMoveDownAnimation.start()
-            }
-        }
-    }
-    SequentialAnimation {
-        id: cycleMoveDownAnimation
-        PropertyAnimation {
-            target: entity
-            property: "y"
-            to: entity.y + deltaY
-            duration: animationDuration
-        }
-        ScriptAction {
-            script: {
-                moveDownAnimation.start()
-            }
-        }
+    WorkerScript {
+        id: collisionDetectScript
+        property bool busy: false
+        source: `${routes.controllers[0].root}/entityColliderController.mjs`
+        onMessage: messageObject => Controller.collisionsDetectMessage(messageObject)
     }
 }

@@ -51,5 +51,10 @@
         <file>views/entities/Enemy.qml</file>
         <file>controllers/entitiesPackController.js</file>
         <file>controllers/entityController.js</file>
+        <file>views/entities/Collider.qml</file>
+        <file>models/game/ColliderModel.qml</file>
+        <file>views/entities/VerticalWall.qml</file>
+        <file>views/entities/HorizontalWall.qml</file>
+        <file>controllers/entityColliderController.mjs</file>
     </qresource>
 </RCC>
