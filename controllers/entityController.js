@@ -46,6 +46,9 @@ function collisionsDetect(dir) {
                                           "entityWidth": collider.width,
                                           "index": entity.index,
                                           "model": colliderModel,
+                                          "noClip": noClip,
+                                          "posX": entity.posX,
+                                          "posY": entity.posY,
                                           "direction": dir,
                                           "distance": distance,
                                           "duration": baseAnimationDuration

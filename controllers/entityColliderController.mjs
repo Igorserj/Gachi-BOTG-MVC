@@ -7,63 +7,67 @@ WorkerScript.onMessage = function (message) {
     const model = message.model
     const distance = message.distance
     const direction = message.direction
+    const noClip = message.noClip
 
-    let upperBound = 0
-    let lowerBound = 0
-    let leftBound = 0
-    let rightBound = 0
-    let horizontalBound = 0
-
-    let verticalBound = 0
-    let deltaX = []
-    let deltaY = []
+    let deltaX = Infinity
+    let deltaY = Infinity
     const baseDuration = message.duration
 
-    let item
-    let itemIndex
+    if (!noClip) {
+        for (let i = 0; i < model.count; ++i) {
+            if (model.get(i).type !== 'Enemy' && model.get(i).type !== 'Hero' && model.get(i).type !== 'Corridor' && message.posX === model.get(i).posX && message.posY === model.get(i).posY) {
+                const item = model.get(i).item
+                // const itemIndex = model.get(i).index
+                const lowerBound = entityY - distance <= item.y + item.height
+                const upperBound = entityY + entityHeight + distance >= item.y
+                const rightBound = entityX - distance <= item.x + item.width
+                const leftBound = entityX + entityWidth + distance >= item.x
 
-    for (let i = 0; i < model.count; ++i) {
-        if (model.get(i).type !== 'Enemy' && model.get(i).type !== 'Hero') {
-            item = model.get(i).item
-            itemIndex = model.get(i).index
-            lowerBound = entityY - distance <= item.y + item.height
-            upperBound = entityY + entityHeight + distance >= item.y
-            rightBound = entityX - distance <= item.x + item.width
-            leftBound = entityX + entityWidth + distance >= item.x
+                const horizontalBound = entityX + entityWidth > item.x && entityX < item.x + item.width
+                const verticalBound = entityY + entityHeight > item.y && entityY < item.y + item.height
 
-            horizontalBound = entityX + entityWidth > item.x && entityX < item.x + item.width
-            verticalBound = entityY + entityHeight > item.y && entityY < item.y + item.height
-
-            if (verticalBound && leftBound && rightBound && index !== itemIndex
-                    && (direction === "left" || direction === "right")) {
-                if (entityX + entityWidth / 2 + distance > item.x + item.width / 2
-                        && direction === "left") {
-                    deltaX.push(Math.abs(entityX - (item.x + item.width)))
-                } else if (entityX + entityWidth / 2 - distance <= item.x + item.width / 2
-                           && direction === "right") {
-                    deltaX.push(Math.abs((entityX + entityWidth) - item.x))
+                if (verticalBound && leftBound && rightBound //&& index !== itemIndex
+                        && (direction === "left" || direction === "right")) {
+                    if (entityX + entityWidth / 2 + distance > item.x + item.width / 2
+                            && direction === "left"
+                            && Math.abs(entityX - (item.x + item.width)) < deltaX) {
+                        deltaX = Math.abs(entityX - (item.x + item.width))
+                    } else if (entityX + entityWidth / 2 - distance <= item.x + item.width / 2
+                               && direction === "right"
+                               && Math.abs((entityX + entityWidth) - item.x) < deltaX) {
+                        deltaX = Math.abs((entityX + entityWidth) - item.x)
+                    }
+                } else if (horizontalBound && upperBound && lowerBound //&& index !== itemIndex
+                           && (direction === "up" || direction === "down")) {
+                    if (entityY + entityHeight / 2 + distance > item.y + item.height / 2
+                            && direction === "up"
+                            && Math.abs(entityY - (item.y + item.height)) < deltaY) {
+                        deltaY = Math.abs(entityY - (item.y + item.height))
+                    } else if (entityY + entityHeight / 2 - distance <= item.y + item.height / 2
+                               && direction === "down"
+                               && Math.abs((entityY + entityHeight) - item.y) < deltaY) {
+                        deltaY = Math.abs((entityY + entityHeight) - item.y)
+                    }
+                } else if ((direction === "up" || direction === "down")
+                           && (distance < deltaY)) {
+                    deltaY = distance
+                } else if ((direction === "right" || direction === "left")
+                           && (distance < deltaX)) {
+                    deltaX = distance
                 }
-            } else if (horizontalBound && upperBound && lowerBound && index !== itemIndex
-                       && (direction === "up" || direction === "down")) {
-                if (entityY + entityHeight / 2 + distance > item.y + item.height / 2
-                        && direction === "up") {
-                    deltaY.push(Math.abs(entityY - (item.y + item.height)))
-                } else if (entityY + entityHeight / 2 - distance <= item.y + item.height / 2
-                           && direction === "down") {
-                    deltaY.push(Math.abs((entityY + entityHeight) - item.y))
-                }
-            } else if (direction === "up" || direction === "down") {
-                deltaY.push(distance)
-            } else if (direction === "right" || direction === "left") {
-                deltaX.push(distance)
             }
+        }
+    } else {
+        if (direction === "up" || direction === "down") {
+            deltaY = distance
+        } else if (direction === "right" || direction === "left") {
+            deltaX = distance
         }
     }
 
-    deltaX = Math.min(...deltaX)
-    deltaY = Math.min(...deltaY)
     const durationX = deltaX / distance * baseDuration
     const durationY = deltaY / distance * baseDuration
+    console.log(durationX, durationY)
 
     WorkerScript.sendMessage({
                                  "deltaX": deltaX,

@@ -101,6 +101,8 @@ function keyAction(key, code, isAutoRepeat) {
         hero.parent.allowLeft = false
         hero.parent.allowRight = true
         hero.controller.collisionsDetect("right")
+    } else if (/*key === Qt.Key_N*/ code === 57) {
+        hero.parent.noClip = !hero.parent.noClip
     }
 }
 

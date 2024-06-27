@@ -1,11 +1,14 @@
 WorkerScript.onMessage = function(message) {
-
+    const items = []
+    const wallList = []
     for (let f = 1; f <= 3; ++f) {
         const item = floorGen(message.seed.map((s)=> s / f), f)
         message.model.append(item)
+        items.push(item.items)
+        wallList.push(item.walls)
     }
     message.model.sync()
-    WorkerScript.sendMessage({ })
+    WorkerScript.sendMessage({ items: items, walls: wallList })
 }
 
 function pseudoRandom(arr) {
@@ -397,19 +400,56 @@ function floorGen(seed, floor) {
             }
         }
     }
-    console.log(connects.map((c)=>Object.entries(c)))
+    const walls = []
+    for (i = 0; i < blocks.length; ++i) {
+        for (j = 0; j < blocks.length; ++j) {
+            if (blocks[i].pos[0] + 1 === blocks[j].pos[0] && blocks[i].pos[1] === blocks[j].pos[1]) {
+                walls.push({ type: 'Wall right', exists: false, pos: blocks[i].pos })
+                j = blocks.length
+            } else if (j === blocks.length - 1) {
+                walls.push({ type: 'Wall right', exists: true, pos: blocks[i].pos })
+            }
+        }
+        for (j = 0; j < blocks.length; ++j) {
+            if (blocks[i].pos[0] - 1 === blocks[j].pos[0] && blocks[i].pos[1] === blocks[j].pos[1]) {
+                walls.push({ type: 'Wall left', exists: false, pos: blocks[i].pos })
+                j = blocks.length
+            } else if (j === blocks.length - 1) {
+                walls.push({ type: 'Wall left', exists: true, pos: blocks[i].pos })
+            }
+        }
+        for (j = 0; j < blocks.length; ++j) {
+            if (blocks[i].pos[0] === blocks[j].pos[0] && blocks[i].pos[1] + 1 === blocks[j].pos[1]) {
+                walls.push({ type: 'Wall bottom', exists: false, pos: blocks[i].pos })
+                j = blocks.length
+            } else if (j === blocks.length - 1) {
+                walls.push({ type: 'Wall bottom', exists: true, pos: blocks[i].pos })
+            }
+        }
+        for (j = 0; j < blocks.length; ++j) {
+            if (blocks[i].pos[0] === blocks[j].pos[0] && blocks[i].pos[1] - 1 === blocks[j].pos[1]) {
+                walls.push({ type: 'Wall top', exists: false, pos: blocks[i].pos })
+                j = blocks.length
+            } else if (j === blocks.length - 1) {
+                walls.push({ type: 'Wall top', exists: true, pos: blocks[i].pos })
+            }
+        }
+    }
+
+    walls.forEach(w => console.log(w.type, w.pos, w.exists))
+    // console.log(connects.map((c)=>Object.entries(c)))
 
     // blocks.forEach((b)=>console.log(Object.entries(b)))
     // passes.forEach((p)=>console.log(Object.entries(p)))
 
     // console.log("nodes")
-    // nodes.forEach((n)=>console.log(n.id, n.pos))
+    // nodes.forEach((n)=>console.log(n.identifier, n.pos))
     // console.log("poses")
-    // poses.forEach((p)=>console.log(Object.keys(p)[0], Object.values(p)[0]))
+    // poses.forEach((p)=>console.log(Object.entries(p)[0]))
     // console.log("blocks")
-    // blocks.forEach((b)=>console.log(b.id, b.pos))
+    // blocks.forEach((b)=>console.log(b.identifier, b.pos))
     // nodes = JSON.parse(JSON.stringify(nodes))
     // blocks = JSON.parse(JSON.stringify(blocks))
-    poses = [...rooms, ...blocks, ...passes].map((it)=>( it.pos ))
-    return { items: [...rooms, ...blocks, ...passes], poses: poses, connects: connects }
+    poses = [...blocks, ...rooms, ...passes].map(it => it.pos)
+    return { items: [...blocks, ...rooms, ...passes], poses: poses, connects: connects, walls: walls }
 }

@@ -16,6 +16,8 @@ Item {
     property bool allowLeft: false
     property bool allowRight: false
 
+    property bool noClip: false
+
     height: 1 / 11 * window.height
     width: height
 
@@ -26,6 +28,8 @@ Item {
         readonly property var controller: Controller
         property string type: type
         property int index: index
+        property int posX: 0
+        property int posY: 0
 
         SequentialAnimation {
             id: moveLeftAnimation
@@ -78,7 +82,6 @@ Item {
 
     WorkerScript {
         id: collisionDetectScript
-        property bool busy: false
         source: `${routes.controllers[0].root}/entityColliderController.mjs`
         onMessage: messageObject => Controller.collisionsDetectMessage(messageObject)
     }
