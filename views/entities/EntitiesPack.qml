@@ -1,5 +1,5 @@
 import QtQuick 2.15
-import "../../controllers/entitiesPackController.js" as Controller
+import "../../controllers/entities/entitiesPackController.js" as Controller
 
 Repeater {
     id: entitiesPack

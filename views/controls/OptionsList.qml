@@ -1,8 +1,7 @@
 import QtQuick 2.15
-import "../../controllers/controls/dropdownController.js" as Controller
 
 Item {
-    id: dropdownItem
+    id: optionsListItems
     width: header.width > footer.width ? header.width : footer.width
     height: header.height + footer.height
     state: "collapsed"
@@ -12,9 +11,20 @@ Item {
         color: "gray"
     }
     Column {
-        Button {
+        Rectangle {
             id: header
-            function clickAction(index) { Controller.dropdown() }
+            height: window.height * 0.1
+            width: label.contentWidth
+            color: "gray"
+
+            Text {
+                id: label
+                height: parent.height
+                fontSizeMode: Text.Fit
+                font.pixelSize: height / 1.5
+                text: 'test'//name
+                color: "white"
+            }
         }
         Column {
             id: footer

@@ -1,5 +1,5 @@
 import QtQuick 2.15
-import "../../controllers/gameController.js" as Controller
+import "../../controllers/game/gameController.js" as Controller
 import "../../models/gui"
 import "../../models/game"
 

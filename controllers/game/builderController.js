@@ -10,6 +10,8 @@ function levelBuild(items, walls) {
                                   'stamina': 0,
                                   'maxHealth': 0,
                                   'maxStamina': 0,
+                                  'itemState': 'default',
+                                  'interact': false,
                                   'positionX': (item.pos[0] - 10),
                                   'positionY': (item.pos[1] - 10) })
         }
@@ -22,6 +24,8 @@ function levelBuild(items, walls) {
                           'stamina': 100,
                           'maxHealth': 100,
                           'maxStamina': 100,
+                          'itemState': 'default',
+                          'interact': false,
                           'positionX': 0,
                           'positionY': 0
                       })
@@ -36,6 +40,8 @@ function levelBuild(items, walls) {
                                   'stamina': 0,
                                   'maxHealth': 0,
                                   'maxStamina': 0,
+                                  'itemState': item.exists ? 'default' : 'passage',
+                                  'interact': !item.exists,
                                   'positionX': (item.pos[0] - 10),
                                   'positionY': (item.pos[1] - 10)
                               })

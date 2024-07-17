@@ -400,6 +400,7 @@ function floorGen(seed, floor) {
             }
         }
     }
+
     const walls = []
     for (i = 0; i < blocks.length; ++i) {
         for (j = 0; j < blocks.length; ++j) {
@@ -433,6 +434,29 @@ function floorGen(seed, floor) {
             } else if (j === blocks.length - 1) {
                 walls.push({ type: 'Wall top', exists: true, pos: blocks[i].pos })
             }
+        }
+    }
+
+    let entryWallType = ''
+
+    for (i = 0; i < walls.length; ++i) {
+        if (walls[i].pos[0] === 10 && walls[i].pos[1] === 10 && !walls[i].exists) {
+            if (walls[i].type === 'Wall left') {
+                entryWallType = 'Wall right'
+            } else if (walls[i].type === 'Wall right') {
+                entryWallType = 'Wall left'
+            } else if (walls[i].type === 'Wall top') {
+                entryWallType = 'Wall bottom'
+            } else if (walls[i].type === 'Wall bottom') {
+                entryWallType = 'Wall top'
+            }
+            i = walls.length
+        }
+    }
+
+    for (i = 0; i < walls.length; ++i) {
+        if (walls[i].pos[0] === 10 && walls[i].pos[1] === 10 && walls[i].type === entryWallType) {
+            walls[i].exists = false
         }
     }
 

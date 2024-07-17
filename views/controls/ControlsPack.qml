@@ -1,5 +1,5 @@
 import QtQuick 2.15
-import "../../controllers/controlsPackController.js" as Pack
+import "../../controllers/controls/controlsPackController.js" as Pack
 
 Item {
     id: pack
@@ -13,7 +13,10 @@ Item {
         // width: item.width
         // height: item.height
         sourceComponent: Pack.componentDetermine(type)
-        onLoaded: {width = item.width; height = item.height}
+        onLoaded: {
+            width = item.width
+            height = item.height
+        }
     }
 
     Component {
@@ -37,5 +40,10 @@ Item {
     Component {
         id: cells
         Cells {}
+    }
+
+    Component {
+        id: options
+        OptionsList {}
     }
 }

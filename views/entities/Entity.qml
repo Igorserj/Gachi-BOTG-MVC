@@ -1,14 +1,10 @@
 import QtQuick 2.15
-import "../../controllers/entityController.js" as Controller
+import "../../controllers/entities/entityController.js" as Controller
 
 Item {
     property alias color: entity.color
     property alias entity: entity
-    property double deltaX: 0
-    property double deltaY: 0
     property double distance: 50
-    property double durationX: 0
-    property double durationY: 0
     property double baseAnimationDuration: 250
 
     property bool allowUp: false
@@ -16,6 +12,7 @@ Item {
     property bool allowLeft: false
     property bool allowRight: false
 
+    property bool active: false
     property bool noClip: false
 
     height: 1 / 11 * window.height
@@ -26,20 +23,21 @@ Item {
         width: parent.width
         height: parent.height
         readonly property var controller: Controller
-        property string type: type
-        property int index: index
+        // property string type: type
+        property int entityIndex: index
         property int posX: 0
         property int posY: 0
+        // property bool interactive: itemInteract
 
         SequentialAnimation {
             id: moveLeftAnimation
             PropertyAnimation {
                 target: entity
                 property: "x"
-                to: entity.x - deltaX
-                duration: durationX
+                to: entity.x - distance
+                duration: baseAnimationDuration
             }
-            onFinished: if (allowLeft) Controller.collisionsDetect("left")
+            onStopped: if (allowLeft) moveLeftAnimation.start()
         }
 
         SequentialAnimation {
@@ -47,10 +45,10 @@ Item {
             PropertyAnimation {
                 target: entity
                 property: "x"
-                to: entity.x + deltaX
-                duration: durationX
+                to: entity.x + distance
+                duration: baseAnimationDuration
             }
-            onFinished: if (allowRight) Controller.collisionsDetect("right")
+            onStopped: if (allowRight) moveRightAnimation.start()
         }
 
         SequentialAnimation {
@@ -58,10 +56,10 @@ Item {
             PropertyAnimation {
                 target: entity
                 property: "y"
-                to: entity.y - deltaY
-                duration: durationY
+                to: entity.y - distance
+                duration: baseAnimationDuration
             }
-            onFinished: if (allowUp) Controller.collisionsDetect("up")
+            onStopped: if (allowUp) moveUpAnimation.start()
         }
 
         SequentialAnimation {
@@ -69,10 +67,10 @@ Item {
             PropertyAnimation {
                 target: entity
                 property: "y"
-                to: entity.y + deltaY
-                duration: durationY
+                to: entity.y + distance
+                duration: baseAnimationDuration
             }
-            onFinished: if (allowDown) Controller.collisionsDetect("down")
+            onStopped: if (allowDown) moveDownAnimation.start()
         }
     }
     Collider {
@@ -81,8 +79,8 @@ Item {
     }
 
     WorkerScript {
-        id: collisionDetectScript
-        source: `${routes.controllers[0].root}/entityColliderController.mjs`
-        onMessage: messageObject => Controller.collisionsDetectMessage(messageObject)
+        id: interactionDetectScript
+        source: `${routes.controllers[0].entities}/interactionController.mjs`
+        onMessage: messageObject => Controller.interactionDetectMessage(messageObject)
     }
 }

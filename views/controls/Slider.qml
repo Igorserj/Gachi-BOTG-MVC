@@ -1,5 +1,5 @@
 import QtQuick 2.15
-import "../../controllers/controlsSlider.js" as Controller
+import "../../controllers/controls/sliderController.js" as Controller
 
 Item {
     id: sliderItem

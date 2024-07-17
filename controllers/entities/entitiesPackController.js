@@ -28,7 +28,6 @@ function entityPositioner(entity, type, positionX, positionY) {
     } else if (type === 'Wall right') {
         entity.x = Qt.binding(() => scene.width * (positionX + 1) - entity.width)
         entity.y = Qt.binding(() => scene.height * positionY)
-        console.log(entity.x, entity.y)
     } else if (type === 'Enemy') {
         entity.x = scene.width / 7
         entity.y = scene.height / 7

@@ -1,5 +1,5 @@
 import QtQuick 2.15
-import "../../controllers/controlsCell.js" as Controller
+import "../../controllers/controls/cellController.js" as Controller
 
 Rectangle {
     id: cellRect

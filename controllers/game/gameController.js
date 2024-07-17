@@ -88,21 +88,24 @@ function keyAction(key, code, isAutoRepeat) {
     } else if (/*key === Qt.Key_W*/ code === 25) {
         hero.parent.allowDown = false
         hero.parent.allowUp = true
-        hero.controller.collisionsDetect("up")
+        hero.parent.entity.controller.moveUp()
     } else if (/*key === Qt.Key_S*/ code === 39) {
         hero.parent.allowUp = false
         hero.parent.allowDown = true
-        hero.controller.collisionsDetect("down")
+        hero.parent.entity.controller.moveDown()
     } else if (/*key === Qt.Key_A*/ code === 38) {
         hero.parent.allowRight = false
         hero.parent.allowLeft = true
-        hero.controller.collisionsDetect("left")
+        hero.parent.entity.controller.moveLeft()
     } else if (/*key === Qt.Key_D*/ code === 40) {
         hero.parent.allowLeft = false
         hero.parent.allowRight = true
-        hero.controller.collisionsDetect("right")
+        hero.parent.entity.controller.moveRight()
     } else if (/*key === Qt.Key_N*/ code === 57) {
         hero.parent.noClip = !hero.parent.noClip
+    } else if (/*key === Qt.Key_E*/ code === 26) {
+        hero.controller.interact()
+        // hero.parent.noClip = !hero.parent.noClip
     }
 }
 

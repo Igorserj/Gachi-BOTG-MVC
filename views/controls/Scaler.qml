@@ -1,5 +1,5 @@
 import QtQuick 2.15
-import "../../controllers/controlsScalerController.js" as Controller
+import "../../controllers/controls/scalerController.js" as Controller
 
 Rectangle {
     property color fillColor: Controller.colorFilling()

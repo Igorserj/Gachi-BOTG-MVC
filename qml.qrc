@@ -8,16 +8,12 @@
         <file>config/Routes.qml</file>
         <file>views/controls/Button.qml</file>
         <file>views/mainMenu/MainMenu.qml</file>
-        <file>controllers/mainMenuController.js</file>
         <file>views/controls/ControlsPack.qml</file>
-        <file>controllers/controlsPackController.js</file>
         <file>views/controls/Slider.qml</file>
         <file>views/controls/Dropdown.qml</file>
-        <file>controllers/controlsDropdownController.js</file>
         <file>models/mainMenu/MenuModel.qml</file>
         <file>models/mainMenu/SettingsModel.qml</file>
         <file>models/mainMenu/StartGameModel.qml</file>
-        <file>controllers/controlsSlider.js</file>
         <file>views/game/Game.qml</file>
         <file>views/gui/Creative.qml</file>
         <file>views/gui/Debug.qml</file>
@@ -29,16 +25,12 @@
         <file>views/gui/MainGUI.qml</file>
         <file>views/controls/Scaler.qml</file>
         <file>models/gui/MainGUIModel.qml</file>
-        <file>controllers/gameController.js</file>
-        <file>controllers/controlsScalerController.js</file>
         <file>models/gui/MenuModel.qml</file>
         <file>models/gui/SettingsModel.qml</file>
         <file>models/gui/InventoryModel.qml</file>
         <file>views/controls/Cells.qml</file>
         <file>views/controls/Cell.qml</file>
-        <file>controllers/controlsCell.js</file>
         <file>views/controls/CellBuffer.qml</file>
-        <file>controllers/gameGeneratorController.mjs</file>
         <file>views/game/Generator.qml</file>
         <file>views/gui/Map.qml</file>
         <file>models/gui/MapModel.qml</file>
@@ -47,15 +39,27 @@
         <file>views/entities/EntitiesPack.qml</file>
         <file>views/entities/Entity.qml</file>
         <file>views/entities/Enemy.qml</file>
-        <file>controllers/entitiesPackController.js</file>
-        <file>controllers/entityController.js</file>
         <file>views/entities/Collider.qml</file>
         <file>models/game/ColliderModel.qml</file>
         <file>views/entities/VerticalWall.qml</file>
         <file>views/entities/HorizontalWall.qml</file>
-        <file>controllers/entityColliderController.mjs</file>
         <file>models/game/LevelModel.qml</file>
         <file>views/entities/Corridor.qml</file>
-        <file>controllers/generatorController.js</file>
+        <file>controllers/controls/cellController.js</file>
+        <file>controllers/controls/controlsPackController.js</file>
+        <file>controllers/controls/dropdownController.js</file>
+        <file>controllers/controls/scalerController.js</file>
+        <file>controllers/controls/sliderController.js</file>
+        <file>controllers/entities/entitiesPackController.js</file>
+        <file>controllers/entities/entityController.js</file>
+        <file>controllers/entities/interactionController.mjs</file>
+        <file>controllers/entities/wallController.js</file>
+        <file>controllers/game/builderController.js</file>
+        <file>controllers/game/gameController.js</file>
+        <file>controllers/mainMenu/mainMenuController.js</file>
+        <file>controllers/game/gameGeneratorController.js</file>
+        <file>views/controls/OptionsList.qml</file>
+        <file>models/game/OptionsModel.qml</file>
+        <file>controllers/entities/colliderDetectController.js</file>
     </qresource>
 </RCC>

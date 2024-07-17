@@ -1,5 +1,5 @@
 import QtQuick 2.15
-import "../../controllers/mainMenuController.js" as Controller
+import "../../controllers/mainMenu/mainMenuController.js" as Controller
 import "../../models/mainMenu"
 
 Item {
