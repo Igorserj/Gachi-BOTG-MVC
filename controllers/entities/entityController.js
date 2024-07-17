@@ -19,15 +19,19 @@ function moveRight() {
 }
 
 function stopMoveLeft() {
+    allowLeft = false
     moveLeftAnimation.stop()
 }
 function stopMoveRight() {
+    allowRight = false
     moveRightAnimation.stop()
 }
 function stopMoveUp() {
+    allowUp = false
     moveUpAnimation.stop()
 }
 function stopMoveDown() {
+    allowDown = false
     moveDownAnimation.stop()
 }
 
