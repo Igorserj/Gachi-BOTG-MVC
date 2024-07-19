@@ -30,8 +30,12 @@ Item {
             id: footer
             Repeater {
                 id: footerRep
-                model: []
-                delegate: Button {}
+                model: options
+                delegate: Button {
+                    function clickAction() {
+                        game.controller.optionInteract(entity)
+                    }
+                }
             }
         }
     }

@@ -15,7 +15,7 @@ Item {
     }
 
     Repeater {
-        id: inventoryRepeater
+        // id: inventoryRepeater
         model: addModel
         delegate: ControlsPack {}
     }

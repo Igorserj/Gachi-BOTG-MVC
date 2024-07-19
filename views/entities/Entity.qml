@@ -23,11 +23,8 @@ Item {
         width: parent.width
         height: parent.height
         readonly property var controller: Controller
-        // property string type: type
-        property int entityIndex: index
         property int posX: 0
         property int posY: 0
-        // property bool interactive: itemInteract
 
         SequentialAnimation {
             id: moveLeftAnimation

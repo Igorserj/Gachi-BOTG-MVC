@@ -1,8 +1,6 @@
 function collistionDetectScript(entity, distance, noClip, posX, posY, colliderModel) {
     // console.log(Object.entries(arguments))
 
-    // const noClip = message.noClip
-
     let item
     let itemType
     const xs = []
@@ -14,8 +12,7 @@ function collistionDetectScript(entity, distance, noClip, posX, posY, colliderMo
     console.log(colliderModel.count)
     for (i = 0; i < colliderModel.count; ++i) {
         item = colliderModel.get(i).item
-        if (colliderModel.get(i).type !== 'Enemy' /*&& colliderModel.get(i).type !== 'entity'*/ && colliderModel.get(i).type !== 'Corridor' && posX === colliderModel.get(i).posX && posY === colliderModel.get(i).posY && (entity.x + entity.width > item.x && entity.x < item.x + item.width) && (entity.y + entity.height > item.y && entity.y < item.y + item.height)) {
-            // if ((entity.x + entity.width > item.x && entity.x < item.x + item.width) && (entity.y + entity.height > item.y && entity.y < item.y + item.height) && entity.type !== itemType) {
+        if (colliderModel.get(i).type !== 'Enemy' /*&& colliderModel.get(i).type !== 'entity'*/ && colliderModel.get(i).type !== 'Corridor' && posX === colliderModel.get(i).posX && posY === colliderModel.get(i).posY && (entity.x + entity.width > item.x && entity.x < item.x + item.width) && (entity.y + entity.height > item.y && entity.y < item.y + item.height) && !noClip) {
 
             if (entity.parent.allowLeft && entity.x < item.x + item.width && item.x + item.width < entity.x + entity.width) {
                 entity.parent.allowLeft = false

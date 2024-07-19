@@ -13,6 +13,7 @@ Rectangle {
         font.pixelSize: height / 1.5
         text: name
         color: "white"
+        // Component.onCompleted: console.log(model)
     }
     MouseArea {
         id: btnArea

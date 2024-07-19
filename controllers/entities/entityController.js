@@ -55,7 +55,7 @@ function interact() {
                                           "entityY": collider.y,
                                           "entityHeight": collider.height,
                                           "entityWidth": collider.width,
-                                          "index": entity.entityIndex,
+                                          "index": entity.index,
                                           "model": colliderModel,
                                           "posX": entity.posX,
                                           "posY": entity.posY,
@@ -66,10 +66,29 @@ function interact() {
 function interactionDetectMessage(messageObject) {
     const indices = messageObject.indices
     if (indices.length > 1) {
+        const options = []
         for (let i = 0; i < indices.length; ++i) {
-            console.log(colliderModel.get(indices[i]).type)
+            options.push({ 'name': optionNameChooser(colliderModel.get(indices[i]).type), 'entity': colliderModel.get(indices[i]).item.parent })
         }
+        optionsModel.clear()
+        optionsModel.append({
+                                'options': options,
+                                'type': 'Options list',
+                            })
+        game.controller.actionEntities()
     } else {
         colliderModel.get(indices[0]).item.parent.active = true
     }
+}
+
+function optionNameChooser(type) {
+    if (type === 'Wall top') {
+        return 'Go up'
+    } else if (type === 'Wall bottom') {
+        return 'Go down'
+    } else if (type === 'Wall left') {
+        return 'Go left'
+    } else if (type === 'Wall right') {
+        return 'Go right'
+    } else return ''
 }

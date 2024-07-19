@@ -10,8 +10,6 @@ Item {
 
     Loader {
         id: loader
-        // width: item.width
-        // height: item.height
         sourceComponent: Pack.componentDetermine(type)
         onLoaded: {
             width = item.width
@@ -43,7 +41,7 @@ Item {
     }
 
     Component {
-        id: options
+        id: optionsList
         OptionsList {}
     }
 }

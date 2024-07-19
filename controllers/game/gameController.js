@@ -4,8 +4,12 @@ function actionMainGUI() {
 }
 
 function actionMenu() {
-    model = menuModel
-    guiLoader.source = `${routes.views[0].gui}/Menu.qml`
+    if (model !== menuModel) {
+        model = menuModel
+        guiLoader.source = `${routes.views[0].gui}/Menu.qml`
+    } else {
+        actionContinue()
+    }
 }
 
 function actionContinue() {
@@ -35,6 +39,20 @@ function actionInventory() {
         } else if (addLoader.status === Loader.Ready) {
             addLoader.sourceComponent = undefined
             addModel = undefined
+        }
+    }
+}
+
+function actionEntities() {
+    if (!!addLoader) {
+        if (addLoader.status === Loader.Null) {
+            addModel = optionsModel
+            addLoader.source = `${routes.views[0].gui}/Options.qml`
+            console.log(Object.keys(addModel))
+        } else if (addLoader.status === Loader.Ready) {
+            addLoader.sourceComponent = undefined
+            addModel = undefined
+            optionsModel.clear()
         }
     }
 }
@@ -130,6 +148,12 @@ function keyReleaseAction(key, code, isAutoRepeat) {
 function cellBufferMovement(corX, corY, cBuffer) {
     cBuffer.x = corX
     cBuffer.y = corY
+}
+
+function optionInteract(entity) {
+    entity.active = true
+    addModel = undefined
+    addLoader.sourceComponent = undefined
 }
 
 function openMap() {

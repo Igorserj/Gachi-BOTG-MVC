@@ -36,6 +36,9 @@ Item {
     InventoryModel {
         id: inventoryModel
     }
+    OptionsModel {
+        id: optionsModel
+    }
     MapModel {
         id: mapModel
     }

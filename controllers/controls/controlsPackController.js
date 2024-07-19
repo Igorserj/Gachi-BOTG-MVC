@@ -4,5 +4,5 @@ function componentDetermine(type) {
     else if (type === "Dropdown") return dropdown
     else if (type === "Scaler") return scaler
     else if (type === "Cells") return cells
-    else if (type === "Options list") return options
+    else if (type === "Options list") return optionsList
 }

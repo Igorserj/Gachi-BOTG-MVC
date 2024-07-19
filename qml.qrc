@@ -61,5 +61,6 @@
         <file>views/controls/OptionsList.qml</file>
         <file>models/game/OptionsModel.qml</file>
         <file>controllers/entities/colliderDetectController.js</file>
+        <file>views/gui/Options.qml</file>
     </qresource>
 </RCC>
