@@ -34,6 +34,10 @@ function actionQuit() {
 function actionInventory() {
     if (!!addLoader) {
         if (addLoader.status === Loader.Null) {
+            inventoryModel.clear()
+            for (let i = 0; i < hero.parent.inventory.count; ++i) {
+                inventoryModel.append(hero.parent.inventory.get(i))
+            }
             addModel = inventoryModel
             addLoader.source = `${routes.views[0].gui}/Inventory.qml`
         } else if (addLoader.status === Loader.Ready) {
@@ -48,7 +52,6 @@ function actionEntities() {
         if (addLoader.status === Loader.Null) {
             addModel = optionsModel
             addLoader.source = `${routes.views[0].gui}/Options.qml`
-            console.log(Object.keys(addModel))
         } else if (addLoader.status === Loader.Ready) {
             addLoader.sourceComponent = undefined
             addModel = undefined
@@ -123,7 +126,6 @@ function keyAction(key, code, isAutoRepeat) {
         hero.parent.noClip = !hero.parent.noClip
     } else if (/*key === Qt.Key_E*/ code === 26) {
         hero.controller.interact()
-        // hero.parent.noClip = !hero.parent.noClip
     }
 }
 

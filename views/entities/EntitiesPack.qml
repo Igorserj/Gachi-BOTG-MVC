@@ -10,6 +10,7 @@ Repeater {
         source: Controller.entityChooser(type)
         onLoaded: {
             Controller.entityPositioner(item.entity, type, positionX, positionY)
+            Controller.entityInventoryPopulation(item, type)
         }
     }
 }

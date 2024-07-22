@@ -10,7 +10,6 @@ WorkerScript.onMessage = function (message) {
     const indices = []
 
     for (let i = 0; i < model.count; ++i) {
-        console.log(Object.keys(model.get(i)))
         if (model.get(i).index !== index && model.get(i).type !== 'Corridor' && message.posX === model.get(i).posX && message.posY === model.get(i).posY && model.get(i).interact) {
             const item = model.get(i).item
             if (item.x - distance / 2 < entityX + entityWidth && item.x + item.width + distance / 2 > entityX

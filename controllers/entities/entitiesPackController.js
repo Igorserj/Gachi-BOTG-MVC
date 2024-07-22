@@ -36,3 +36,49 @@ function entityPositioner(entity, type, positionX, positionY) {
         entity.y = entity.height * positionY
     }
 }
+
+function entityInventoryPopulation(entity, type) {
+    if (type === 'Hero') {
+        let cellList = []
+        let metadataList = []
+        let i
+        for (i = 0; i < 6; ++i) {
+            cellList.push({ 'type': "Bag" })
+        }
+
+        for (i = 0; i < cellList.length; ++i) {
+            metadataList.push({ 'name': "" })
+        }
+        metadataList[0].name = 'Zalupa'
+        metadataList[0].type = 'One hand'
+        entity.inventory.append({
+                                    'name': "Hero inventory cells",
+                                    'type': "Cells",
+                                    'columns': 5,
+                                    'cellList': cellList.slice(),
+                                    'metadataList': metadataList.slice()
+                                })
+
+        cellList = []
+        metadataList = []
+        cellList.push({ 'type': "Head" })
+        cellList.push({ 'type': "Torso" })
+        cellList.push({ 'type': "Legs" })
+        cellList.push({ 'type': "Feet" },)
+        cellList.push({ 'type': "Left hand" })
+        cellList.push({ 'type': "Right hand" })
+        cellList.push({ 'type': "Two hands" })
+
+        for (i = 0; i < cellList.length; ++i) {
+            metadataList.push({ 'name': "" })
+        }
+
+        entity.inventory.append({
+                                    'name': "Hero equipment cells",
+                                    'type': "Cells",
+                                    'columns': 4,
+                                    'cellList': cellList.slice(),
+                                    'metadataList': metadataList.slice()
+                                })
+    }
+}

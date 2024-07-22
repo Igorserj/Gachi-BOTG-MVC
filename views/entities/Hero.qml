@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import "../../models/game"
 
 Entity {
     color: "gray"
@@ -7,4 +8,5 @@ Entity {
         scene.y = Qt.binding(() => Math.floor((entity.y + entity.height / 2) / scene.height) * -scene.height - (scene.height - window.height)) //Qt.binding(() => (-entity.y + window.height / 2))
         hero = entity
     }
+    onActiveChanged: entity.controller.lootAction(hero, entity)
 }

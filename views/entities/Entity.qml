@@ -1,9 +1,11 @@
 import QtQuick 2.15
+import "../../models/game"
 import "../../controllers/entities/entityController.js" as Controller
 
 Item {
     property alias color: entity.color
     property alias entity: entity
+    property alias inventory: entityInventoryModel
     property double distance: 50
     property double baseAnimationDuration: 250
 
@@ -70,6 +72,10 @@ Item {
             onStopped: if (allowDown) moveDownAnimation.start()
         }
     }
+    EntityInventoryModel {
+        id: entityInventoryModel
+    }
+
     Collider {
         id: collider
         anchors.fill: entity

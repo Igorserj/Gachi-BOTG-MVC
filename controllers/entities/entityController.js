@@ -90,5 +90,11 @@ function optionNameChooser(type) {
         return 'Go left'
     } else if (type === 'Wall right') {
         return 'Go right'
+    } else if (type === 'Hero' || type === 'Enemy') {
+        return 'Loot'
     } else return ''
+}
+
+function lootAction(hero, entity) {
+
 }
