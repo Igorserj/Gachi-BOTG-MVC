@@ -10,7 +10,7 @@ Entity {
             name: "default"
             PropertyChanges {
                 target: entity
-                color: "white"
+                color: "gray"
             }
         },
         State {

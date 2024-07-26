@@ -15,8 +15,12 @@ Item {
     }
 
     Repeater {
-        // id: inventoryRepeater
         model: addModel
-        delegate: ControlsPack {}
+        delegate: Repeater {
+            property var invType: modelData.invType
+            property var inv: modelData.inv
+            model: inv
+            delegate: ControlsPack {}
+        }
     }
 }

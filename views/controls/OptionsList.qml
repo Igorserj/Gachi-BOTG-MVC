@@ -22,7 +22,7 @@ Item {
                 height: parent.height
                 fontSizeMode: Text.Fit
                 font.pixelSize: height / 1.5
-                text: 'test'//name
+                text: name
                 color: "white"
             }
         }

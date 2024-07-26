@@ -63,5 +63,7 @@
         <file>controllers/entities/colliderDetectController.js</file>
         <file>views/gui/Options.qml</file>
         <file>models/game/EntityInventoryModel.qml</file>
+        <file>models/gui/DebugModel.qml</file>
+        <file>controllers/gui/debugController.js</file>
     </qresource>
 </RCC>

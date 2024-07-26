@@ -27,6 +27,12 @@ Item {
         readonly property var controller: Controller
         property int posX: 0
         property int posY: 0
+        property string eName: name
+        property int hp: health
+        property int maxHp: maxHealth
+
+        property int sta: stamina
+        property int maxSta: maxStamina
 
         SequentialAnimation {
             id: moveLeftAnimation

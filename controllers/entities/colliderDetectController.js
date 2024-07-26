@@ -31,7 +31,6 @@ function collistionDetectScript(entity, distance, noClip, posX, posY, colliderMo
                 entity.parent.entity.controller.stopMoveDown()
                 ys.push(item.y - entity.height - 1)
             }
-            // }
         }
     }
     for (i = 0; i < xs.length; ++i) {

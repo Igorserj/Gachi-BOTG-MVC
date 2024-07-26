@@ -9,10 +9,11 @@ Item {
     property var addModel
     property var addLoader
     property var hero
+    property bool showBoundaries: false
     readonly property var controller: Controller
     focus: true
-    Keys.onPressed: (event)=> controller.keyAction(event.key, event.nativeScanCode, event.isAutoRepeat)
-    Keys.onReleased: (event)=> controller.keyReleaseAction(event.key, event.nativeScanCode, event.isAutoRepeat)
+    Keys.onPressed: event => controller.keyAction(event.key, event.nativeScanCode, event.isAutoRepeat)
+    Keys.onReleased: event => controller.keyReleaseAction(event.key, event.nativeScanCode, event.isAutoRepeat)
 
     Generator {}
     Scene {}
@@ -32,6 +33,9 @@ Item {
     }
     SettingsModel {
         id: settingsModel
+    }
+    DebugModel {
+        id: debugModel
     }
     InventoryModel {
         id: inventoryModel

@@ -3,6 +3,8 @@ import QtQuick 2.15
 Rectangle {
     property var fromItem
     property var toItem
+    property var fromModel
+    property var toModel
 
     onFromItemChanged: {
         if (!!fromItem) {

@@ -30,6 +30,19 @@ function levelBuild(items, walls) {
                           'positionY': 0
                       })
 
+    levelModel.append({
+                          'type': "Enemy",
+                          'name': "Arsonist",
+                          'health': 0,
+                          'stamina': 0,
+                          'maxHealth': 100,
+                          'maxStamina': 100,
+                          'itemState': 'default',
+                          'interact': true,
+                          'positionX': 0,
+                          'positionY': 0
+                      })
+
     for (i = 0; i < walls.length; ++i) {
         item = walls[i]
         // if (item.exists) {

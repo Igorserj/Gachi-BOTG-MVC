@@ -1,4 +1,22 @@
 function actionMainGUI() {
+    mainGUIModel.clear()
+    mainGUIModel.append({
+                            name: hero.eName,
+                            type: "Button",
+                        })
+    mainGUIModel.append({
+                            type: "Scaler",
+                            units: "HP",
+                            value: hero.hp,
+                            maxValue: hero.maxHp
+                        })
+    mainGUIModel.append({
+                            type: "Scaler",
+                            units: "SP",
+                            value: hero.sta,
+                            maxValue: hero.maxSta
+                        })
+
     model = mainGUIModel
     guiLoader.source = `${routes.views[0].gui}/MainGUI.qml`
 }
@@ -21,7 +39,10 @@ function actionSettings() {
     guiLoader.source = `${routes.views[0].gui}/Settings.qml`
 }
 
-function actionDebug() {}
+function actionDebug() {
+    model = debugModel
+    guiLoader.source = `${routes.views[0].gui}/Debug.qml`
+}
 
 function actionMainMenu() {
     mainLoader.source = routes.resources[0].mainMenu
@@ -31,18 +52,20 @@ function actionQuit() {
     Qt.quit()
 }
 
-function actionInventory() {
+function actionInventory(entity) {
     if (!!addLoader) {
         if (addLoader.status === Loader.Null) {
-            inventoryModel.clear()
-            for (let i = 0; i < hero.parent.inventory.count; ++i) {
-                inventoryModel.append(hero.parent.inventory.get(i))
+            const list = hero.parent.inventory
+            let item = []
+            item.push({ 'inv': list, 'invType': 'Hero' })
+            if (!!entity) {
+                item.push({ 'inv': entity.parent.inventory, 'invType': 'Enemy' })
+                entity.parent.active = false
             }
-            addModel = inventoryModel
+            addModel = item
             addLoader.source = `${routes.views[0].gui}/Inventory.qml`
         } else if (addLoader.status === Loader.Ready) {
-            addLoader.sourceComponent = undefined
-            addModel = undefined
+            addLoaderUnload()
         }
     }
 }
@@ -53,8 +76,7 @@ function actionEntities() {
             addModel = optionsModel
             addLoader.source = `${routes.views[0].gui}/Options.qml`
         } else if (addLoader.status === Loader.Ready) {
-            addLoader.sourceComponent = undefined
-            addModel = undefined
+            addLoaderUnload()
             optionsModel.clear()
         }
     }
@@ -64,17 +86,21 @@ function invRefAssign(item) {
     addLoader = item
 }
 
-function cellsAlignments(index, item) {
-    if (index === 0) {
-        item.y = (window.height - item.height) / 2
-    } else if (index === 1) {
-        item.y = window.height - item.height
-    } else if (index === 2) {
-        item.x = window.width - item.width
-        item.y = (window.height - item.height) / 2
-    } else if (index === 3) {
-        item.x = window.width - item.width
-        item.y = window.height - item.height
+function cellsAlignments(index, item, type) {
+    if (type === 'Hero') {
+        if (index === 0) {
+            item.y = (window.height - item.height) / 2
+        } else if (index === 1) {
+            item.y = window.height - item.height
+        }
+    } else if (type === 'Enemy') {
+        if (index === 0) {
+            item.x = window.width - item.width
+            item.y = (window.height - item.height) / 2
+        } else if (index === 1) {
+            item.x = window.width - item.width
+            item.y = window.height - item.height
+        }
     }
 }
 
@@ -154,8 +180,7 @@ function cellBufferMovement(corX, corY, cBuffer) {
 
 function optionInteract(entity) {
     entity.active = true
-    addModel = undefined
-    addLoader.sourceComponent = undefined
+    addLoaderUnload()
 }
 
 function openMap() {
@@ -164,10 +189,14 @@ function openMap() {
             addModel = mapModel
             addLoader.source = `${routes.views[0].gui}/Map.qml`
         } else if (addLoader.status === Loader.Ready) {
-            addLoader.sourceComponent = undefined
-            addModel = undefined
+            addLoaderUnload()
         }
     }
+}
+
+function addLoaderUnload() {
+    addLoader.sourceComponent = undefined
+    addModel = undefined
 }
 
 function mapElementGetX(mapLayer, index) {

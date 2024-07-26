@@ -8,7 +8,7 @@ Item {
         onMessage: messageObject => {
                        Controller.levelBuild(messageObject.items[0], messageObject.walls[0])
                        controller.actionMainGUI()
-        }
+                   }
         Component.onCompleted: sendMessage({ 'seed': seed, 'model': mapModel })
     }
 }

@@ -5,7 +5,7 @@ Item {
     readonly property int i: index
     width: (0.065 * window.height + 0.01 * window.height * (columns - 1) / columns) * columns
     height: (0.065 * window.height + 0.01 * window.height * (Math.ceil(metadataList.count / columns) - 1) / Math.ceil(metadataList.count / columns)) * Math.ceil(metadataList.count / columns)
-    Component.onCompleted: controller.cellsAlignments(index, this)
+    Component.onCompleted: controller.cellsAlignments(index, this, invType)
 
     Repeater {
         model: metadataList

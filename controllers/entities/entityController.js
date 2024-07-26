@@ -72,6 +72,7 @@ function interactionDetectMessage(messageObject) {
         }
         optionsModel.clear()
         optionsModel.append({
+                                'name': 'What to do?',
                                 'options': options,
                                 'type': 'Options list',
                             })
@@ -95,6 +96,6 @@ function optionNameChooser(type) {
     } else return ''
 }
 
-function lootAction(hero, entity) {
-
+function lootAction(entity) {
+    game.controller.actionInventory(entity)
 }
