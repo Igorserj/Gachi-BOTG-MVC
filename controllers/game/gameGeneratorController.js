@@ -401,38 +401,59 @@ function floorGen(seed, floor) {
         }
     }
 
+    const blocksAndRooms = [...blocks, ...rooms]
     const walls = []
-    for (i = 0; i < blocks.length; ++i) {
-        for (j = 0; j < blocks.length; ++j) {
-            if (blocks[i].pos[0] + 1 === blocks[j].pos[0] && blocks[i].pos[1] === blocks[j].pos[1]) {
-                walls.push({ type: 'Wall right', exists: false, pos: blocks[i].pos })
-                j = blocks.length
-            } else if (j === blocks.length - 1) {
-                walls.push({ type: 'Wall right', exists: true, pos: blocks[i].pos })
+    for (i = 0; i < blocksAndRooms.length; ++i) {
+        for (j = 0; j < blocksAndRooms.length; ++j) {
+            if (blocksAndRooms[i].pos[0] + 1 === blocksAndRooms[j].pos[0] && blocksAndRooms[i].pos[1] === blocksAndRooms[j].pos[1]) {
+                if (blocksAndRooms[i].type === 'room' || blocksAndRooms[j].type === 'room') {
+                    walls.push({ type: 'Wall right', subtype: 'default', pos: blocksAndRooms[i].pos })
+                    walls.push({ type: 'Wall right', subtype: 'door', pos: blocksAndRooms[i].pos })
+                } else {
+                    walls.push({ type: 'Wall right', subtype: 'passage', pos: blocksAndRooms[i].pos })
+                }
+                j = blocksAndRooms.length
+            } else if (j === blocksAndRooms.length - 1) {
+                walls.push({ type: 'Wall right', subtype: 'default', pos: blocksAndRooms[i].pos })
             }
         }
-        for (j = 0; j < blocks.length; ++j) {
-            if (blocks[i].pos[0] - 1 === blocks[j].pos[0] && blocks[i].pos[1] === blocks[j].pos[1]) {
-                walls.push({ type: 'Wall left', exists: false, pos: blocks[i].pos })
-                j = blocks.length
-            } else if (j === blocks.length - 1) {
-                walls.push({ type: 'Wall left', exists: true, pos: blocks[i].pos })
+        for (j = 0; j < blocksAndRooms.length; ++j) {
+            if (blocksAndRooms[i].pos[0] - 1 === blocksAndRooms[j].pos[0] && blocksAndRooms[i].pos[1] === blocksAndRooms[j].pos[1]) {
+                if (blocksAndRooms[i].type === 'room' || blocksAndRooms[j].type === 'room') {
+                    walls.push({ type: 'Wall left', subtype: 'default', pos: blocksAndRooms[i].pos })
+                    walls.push({ type: 'Wall left', subtype: 'door', pos: blocksAndRooms[i].pos })
+                } else {
+                    walls.push({ type: 'Wall left', subtype: 'passage', pos: blocksAndRooms[i].pos })
+                }
+                j = blocksAndRooms.length
+            } else if (j === blocksAndRooms.length - 1) {
+                walls.push({ type: 'Wall left', subtype: 'default', pos: blocksAndRooms[i].pos })
             }
         }
-        for (j = 0; j < blocks.length; ++j) {
-            if (blocks[i].pos[0] === blocks[j].pos[0] && blocks[i].pos[1] + 1 === blocks[j].pos[1]) {
-                walls.push({ type: 'Wall bottom', exists: false, pos: blocks[i].pos })
-                j = blocks.length
-            } else if (j === blocks.length - 1) {
-                walls.push({ type: 'Wall bottom', exists: true, pos: blocks[i].pos })
+        for (j = 0; j < blocksAndRooms.length; ++j) {
+            if (blocksAndRooms[i].pos[0] === blocksAndRooms[j].pos[0] && blocksAndRooms[i].pos[1] + 1 === blocksAndRooms[j].pos[1]) {
+                if (blocksAndRooms[i].type === 'room' || blocksAndRooms[j].type === 'room') {
+                    walls.push({ type: 'Wall bottom', subtype: 'default', pos: blocksAndRooms[i].pos })
+                    walls.push({ type: 'Wall bottom', subtype: 'door', pos: blocksAndRooms[i].pos })
+                } else {
+                    walls.push({ type: 'Wall bottom', subtype: 'passage', pos: blocksAndRooms[i].pos })
+                }
+                j = blocksAndRooms.length
+            } else if (j === blocksAndRooms.length - 1) {
+                walls.push({ type: 'Wall bottom', subtype: 'default', pos: blocksAndRooms[i].pos })
             }
         }
-        for (j = 0; j < blocks.length; ++j) {
-            if (blocks[i].pos[0] === blocks[j].pos[0] && blocks[i].pos[1] - 1 === blocks[j].pos[1]) {
-                walls.push({ type: 'Wall top', exists: false, pos: blocks[i].pos })
-                j = blocks.length
-            } else if (j === blocks.length - 1) {
-                walls.push({ type: 'Wall top', exists: true, pos: blocks[i].pos })
+        for (j = 0; j < blocksAndRooms.length; ++j) {
+            if (blocksAndRooms[i].pos[0] === blocksAndRooms[j].pos[0] && blocksAndRooms[i].pos[1] - 1 === blocksAndRooms[j].pos[1]) {
+                if (blocksAndRooms[i].type === 'room' || blocksAndRooms[j].type === 'room') {
+                    walls.push({ type: 'Wall top', subtype: 'default', pos: blocksAndRooms[i].pos })
+                    walls.push({ type: 'Wall top', subtype: 'door', pos: blocksAndRooms[i].pos })
+                } else {
+                    walls.push({ type: 'Wall top', subtype: 'passage', pos: blocksAndRooms[i].pos })
+                }
+                j = blocksAndRooms.length
+            } else if (j === blocksAndRooms.length - 1) {
+                walls.push({ type: 'Wall top', subtype: 'default', pos: blocksAndRooms[i].pos })
             }
         }
     }
@@ -440,27 +461,31 @@ function floorGen(seed, floor) {
     let entryWallType = ''
 
     for (i = 0; i < walls.length; ++i) {
-        if (walls[i].pos[0] === 10 && walls[i].pos[1] === 10 && !walls[i].exists) {
+        if (walls[i].pos[0] === 10 && walls[i].pos[1] === 10 && walls[i].subtype !== 'default') {
             if (walls[i].type === 'Wall left') {
-                entryWallType = 'Wall right'
+                // entryWallType = 'Wall right'
+                walls.push({ type: 'Wall right', subtype: 'door', pos: [10, 10] })
             } else if (walls[i].type === 'Wall right') {
-                entryWallType = 'Wall left'
+                // entryWallType = 'Wall left'
+                walls.push({ type: 'Wall left', subtype: 'door', pos: [10, 10] })
             } else if (walls[i].type === 'Wall top') {
-                entryWallType = 'Wall bottom'
+                // entryWallType = 'Wall bottom'
+                walls.push({ type: 'Wall bottom', subtype: 'door', pos: [10, 10] })
             } else if (walls[i].type === 'Wall bottom') {
-                entryWallType = 'Wall top'
+                // entryWallType = 'Wall top'
+                walls.push({ type: 'Wall top', subtype: 'door', pos: [10, 10] })
             }
             i = walls.length
         }
     }
 
-    for (i = 0; i < walls.length; ++i) {
-        if (walls[i].pos[0] === 10 && walls[i].pos[1] === 10 && walls[i].type === entryWallType) {
-            walls[i].exists = false
-        }
-    }
+    // for (i = 0; i < walls.length; ++i) {
+    //     if (walls[i].pos[0] === 10 && walls[i].pos[1] === 10 && walls[i].type === entryWallType) {
+    //         walls[i].subtype = 'door'
+    //     }
+    // }
 
-    walls.forEach(w => console.log(w.type, w.pos, w.exists))
+    walls.forEach(w => console.log(w.type, w.pos, w.subtype))
     // console.log(connects.map((c)=>Object.entries(c)))
 
     // blocks.forEach((b)=>console.log(Object.entries(b)))

@@ -6,4 +6,16 @@ ListModel {
         name: 'Boundaries visibility'
         type: "Button"
     }
+    ListElement {
+        name: 'NoClip'
+        type: "Button"
+    }
+    ListElement {
+        name: 'Add hero health'
+        type: "Button"
+    }
+    ListElement {
+        name: 'Decrease hero health'
+        type: "Button"
+    }
 }

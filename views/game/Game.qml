@@ -16,8 +16,9 @@ Item {
     Keys.onReleased: event => controller.keyReleaseAction(event.key, event.nativeScanCode, event.isAutoRepeat)
 
     Generator {}
-    Scene {}
-    // Scene2 {}
+    Scene {
+        id: scene
+    }
 
     Loader {
         id: guiLoader

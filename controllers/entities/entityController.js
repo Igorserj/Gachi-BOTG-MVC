@@ -57,14 +57,15 @@ function interact() {
                                           "entityWidth": collider.width,
                                           "index": entity.index,
                                           "model": colliderModel,
-                                          "posX": entity.posX,
-                                          "posY": entity.posY,
+                                          "posX": posX,
+                                          "posY": posY,
                                           "distance": distance
                                       })
 }
 
 function interactionDetectMessage(messageObject) {
     const indices = messageObject.indices
+    game.controller.addLoaderUnload()
     if (indices.length > 1) {
         const options = []
         for (let i = 0; i < indices.length; ++i) {

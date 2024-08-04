@@ -1,5 +1,6 @@
-function wallAction(item) {
-    if (state === 'passage' && active) {
+function wallAction(item, state, type) {
+    console.log(state, active)
+    if (state !== 'default' && active) {
         active = false
         if (type === 'Wall left') {
             goLeft(item)

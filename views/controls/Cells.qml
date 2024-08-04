@@ -18,5 +18,15 @@ Item {
             Cell {}
         }
     }
+    Connections {
+        enabled: invType === 'Enemy'
+        target: hero
+        function onXChanged() {
+            controller.addLoaderUnload()
+        }
+        function onYChanged() {
+            controller.addLoaderUnload()
+        }
+    }
 }
 

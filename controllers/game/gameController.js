@@ -76,7 +76,6 @@ function actionEntities() {
             addModel = optionsModel
             addLoader.source = `${routes.views[0].gui}/Options.qml`
         } else if (addLoader.status === Loader.Ready) {
-            addLoaderUnload()
             optionsModel.clear()
         }
     }
@@ -148,8 +147,6 @@ function keyAction(key, code, isAutoRepeat) {
         hero.parent.allowLeft = false
         hero.parent.allowRight = true
         hero.parent.entity.controller.moveRight()
-    } else if (/*key === Qt.Key_N*/ code === 57) {
-        hero.parent.noClip = !hero.parent.noClip
     } else if (/*key === Qt.Key_E*/ code === 26) {
         hero.controller.interact()
     }
@@ -179,8 +176,8 @@ function cellBufferMovement(corX, corY, cBuffer) {
 }
 
 function optionInteract(entity) {
-    entity.active = true
     addLoaderUnload()
+    entity.active = true
 }
 
 function openMap() {
@@ -284,4 +281,9 @@ function mapElementGetText(type, mapLayer, identifier) {
         }
     }
     return text
+}
+
+function scenePositioner() {
+    scene.x = Qt.binding(() => Math.floor((hero.x + hero.width / 2) / scene.width) * -scene.width)
+    scene.y = Qt.binding(() => Math.floor((hero.y + hero.height / 2) / scene.height) * -scene.height - (scene.height - window.height))
 }

@@ -9,6 +9,10 @@ function entityChooser(type) {
         return `${routes.views[0].entities}/VerticalWall.qml`
     } else if (type === 'Corridor') {
         return `${routes.views[0].entities}/Corridor.qml`
+    } else if (type === 'Room') {
+        return `${routes.views[0].entities}/Room.qml`
+    } else if (type === 'Item') {
+        return `${routes.views[0].entities}/FloorItem.qml`
     }
 }
 
@@ -17,23 +21,26 @@ function entityPositioner(entity, type, positionX, positionY) {
         entity.x = (scene.width - entity.width) / 2
         entity.y = (scene.height - entity.height) / 2
     } else if (type === 'Wall top') {
-        entity.x = Qt.binding(() => scene.width * positionX)
+        entity.x = Qt.binding(() => scene.width * positionX + (scene.width - entity.width) / 2)
         entity.y = Qt.binding(() => scene.height * positionY)
     } else if (type === 'Wall bottom') {
-        entity.x = Qt.binding(() => scene.width * positionX)
+        entity.x = Qt.binding(() => scene.width * positionX + (scene.width - entity.width) / 2)
         entity.y = Qt.binding(() => scene.height * (positionY + 1) - entity.height)
     } else if (type === 'Wall left') {
         entity.x = Qt.binding(() => scene.width * positionX)
-        entity.y = Qt.binding(() => scene.height * positionY)
+        entity.y = Qt.binding(() => scene.height * positionY + (scene.height - entity.height) / 2)
     } else if (type === 'Wall right') {
         entity.x = Qt.binding(() => scene.width * (positionX + 1) - entity.width)
-        entity.y = Qt.binding(() => scene.height * positionY)
+        entity.y = Qt.binding(() => scene.height * positionY + (scene.height - entity.height) / 2)
     } else if (type === 'Enemy') {
         entity.x = scene.width / 7
         entity.y = scene.height / 7
-    } else if (type === 'Corridor') {
+    } else if (type === 'Corridor' || type === 'Room') {
         entity.x = entity.width * positionX
         entity.y = entity.height * positionY
+    } else if (type === 'Item') {
+        entity.x = entity.width * positionX + 150
+        entity.y = entity.height * positionY + 150
     }
 }
 
@@ -64,7 +71,7 @@ function entityInventoryPopulation(entity, type) {
         cellList.push({ 'type': "Head" })
         cellList.push({ 'type': "Torso" })
         cellList.push({ 'type': "Legs" })
-        cellList.push({ 'type': "Feet" },)
+        cellList.push({ 'type': "Feet" })
         cellList.push({ 'type': "Left hand" })
         cellList.push({ 'type': "Right hand" })
         cellList.push({ 'type': "Two hands" })

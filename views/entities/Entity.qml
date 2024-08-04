@@ -5,6 +5,8 @@ import "../../controllers/entities/entityController.js" as Controller
 Item {
     property alias color: entity.color
     property alias entity: entity
+    property alias posX: entity.posX
+    property alias posY: entity.posY
     property alias inventory: entityInventoryModel
     property double distance: 50
     property double baseAnimationDuration: 250
@@ -25,8 +27,8 @@ Item {
         width: parent.width
         height: parent.height
         readonly property var controller: Controller
-        property int posX: 0
-        property int posY: 0
+        property int posX: positionX
+        property int posY: positionY
         property string eName: name
         property int hp: health
         property int maxHp: maxHealth

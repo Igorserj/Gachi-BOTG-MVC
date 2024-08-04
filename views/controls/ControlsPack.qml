@@ -6,7 +6,7 @@ Item {
     readonly property int thisIndex: index
     width: loader.width
     height: loader.height
-    function controlsAction(index) {}
+    // function controlsAction(index) {}
 
     Loader {
         id: loader
