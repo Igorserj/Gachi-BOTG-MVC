@@ -10,7 +10,7 @@ function collistionDetectScript(entity, distance, noClip, posX, posY, colliderMo
     for (i = 0; i < colliderModel.count; ++i) {
         item = colliderModel.get(i).item
         const itemType = colliderModel.get(i).type
-        if (posX === colliderModel.get(i).posX && posY === colliderModel.get(i).posY && (entity.x + entity.width > item.x && entity.x < item.x + item.width) && (entity.y + entity.height > item.y && entity.y < item.y + item.height) && !noClip) {
+        if (!!item && posX === colliderModel.get(i).posX && posY === colliderModel.get(i).posY && (entity.x + entity.width > item.x && entity.x < item.x + item.width) && (entity.y + entity.height > item.y && entity.y < item.y + item.height) && !noClip) {
             if (!['Enemy', 'Corridor', 'Room', 'Hero', 'Item'].includes(itemType)) {
                 if (entity.parent.allowLeft && entity.x < item.x + item.width && item.x + item.width < entity.x + entity.width) {
                     entity.parent.allowLeft = false
@@ -31,7 +31,11 @@ function collistionDetectScript(entity, distance, noClip, posX, posY, colliderMo
                     entity.parent.entity.controller.stopMoveDown()
                     ys.push(item.y - entity.height - 1)
                 }
-            } else if (['Item'].includes(itemType)) {
+            } else if (['Item'].includes(itemType) && !!entity.parent.inventory.get(0)) {
+                const count = entity.parent.inventory.get(0).metadataList.count
+                for (let j = 0; j < count; ++j) {
+                    if (entity.parent.entity.controller.pickUpItem(entity.parent.inventory.get(0).metadataList.get(j), levelModel.get(item.parent.entityIndex), item.parent)) j = count
+                }
             }
         }
     }

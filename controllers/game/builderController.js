@@ -14,7 +14,10 @@ function levelBuild(items, walls) {
                                   'itemState': 'default',
                                   'interact': false,
                                   'positionX': (item.pos[0] - 10),
-                                  'positionY': (item.pos[1] - 10) })
+                                  'positionY': (item.pos[1] - 10),
+                                  'metadata': [],
+                                  'cells': []
+                              })
         } else if (item.type === "room") {
             levelModel.append({
                                   'type': "Room",
@@ -26,7 +29,10 @@ function levelBuild(items, walls) {
                                   'itemState': 'default',
                                   'interact': false,
                                   'positionX': (item.pos[0] - 10),
-                                  'positionY': (item.pos[1] - 10) })
+                                  'positionY': (item.pos[1] - 10),
+                                  'metadata': [],
+                                  'cells': []
+                              })
         }
     }
 
@@ -40,7 +46,9 @@ function levelBuild(items, walls) {
                           'itemState': 'default',
                           'interact': false,
                           'positionX': 0,
-                          'positionY': 0
+                          'positionY': 0,
+                          'metadata': [{'name': "Knife", 'type': "One hand"}],
+                          'cells': [{'type': "Bag"}]
                       })
 
     levelModel.append({
@@ -53,7 +61,9 @@ function levelBuild(items, walls) {
                           'itemState': 'default',
                           'interact': false,
                           'positionX': 0,
-                          'positionY': 0
+                          'positionY': 0,
+                          'metadata': [],
+                          'cells': []
                       })
 
     levelModel.append({
@@ -66,12 +76,13 @@ function levelBuild(items, walls) {
                           'itemState': 'default',
                           'interact': true,
                           'positionX': 0,
-                          'positionY': 0
+                          'positionY': 0,
+                          'metadata': [],
+                          'cells': []
                       })
 
     for (i = 0; i < walls.length; ++i) {
         item = walls[i]
-        // if (item.exists) {
         levelModel.append({
                               'type': item.type,
                               'name': 'Wall',
@@ -82,8 +93,9 @@ function levelBuild(items, walls) {
                               'itemState': item.subtype,
                               'interact': item.subtype !== 'default',
                               'positionX': (item.pos[0] - 10),
-                              'positionY': (item.pos[1] - 10)
+                              'positionY': (item.pos[1] - 10),
+                              'metadata': [],
+                              'cells': []
                           })
-        // }
     }
 }

@@ -100,3 +100,16 @@ function optionNameChooser(type) {
 function lootAction(entity) {
     game.controller.actionInventory(entity)
 }
+
+function pickUpItem(entityInv, model, item) {
+    if (entityInv.name === '' && !!model) {
+        entityInv.name = model.name
+        entityInv.type = model.metadata.get(0).type
+        entityInv.columns = model.columns
+        entityInv.metadataList = model.metadata
+        entityInv.cellList = model.cells
+        levelModel.remove(item.entityIndex)
+        return true
+    }
+    return false
+}

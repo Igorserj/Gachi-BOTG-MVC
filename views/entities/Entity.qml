@@ -19,6 +19,8 @@ Item {
     property bool active: false
     property bool noClip: false
 
+    property int entityIndex: index
+
     height: 1 / 11 * window.height
     width: height
 

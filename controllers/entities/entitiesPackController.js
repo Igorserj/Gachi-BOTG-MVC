@@ -44,7 +44,7 @@ function entityPositioner(entity, type, positionX, positionY) {
     }
 }
 
-function entityInventoryPopulation(entity, type) {
+function entityInventoryPopulation(entity, type, name, cells, metadata) {
     let cellList = []
     let metadataList = []
     let i
@@ -87,7 +87,7 @@ function entityInventoryPopulation(entity, type) {
                                     'cellList': cellList.slice(),
                                     'metadataList': metadataList.slice()
                                 })
-    } else if ('Enemy') {
+    } else if (type === 'Enemy') {
         for (i = 0; i < 6; ++i) {
             cellList.push({ 'type': "Bag" })
         }
@@ -126,6 +126,14 @@ function entityInventoryPopulation(entity, type) {
                                     'columns': 4,
                                     'cellList': cellList.slice(),
                                     'metadataList': metadataList.slice()
+                                })
+    } else if (type === 'Item') {
+        entity.inventory.append({
+                                    'name': name,
+                                    'type': "Cells",
+                                    'columns': 1,
+                                    'cellList': cells,
+                                    'metadataList': metadata
                                 })
     }
 }
