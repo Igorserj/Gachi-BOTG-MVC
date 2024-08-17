@@ -15,6 +15,8 @@ function levelBuild(items, walls) {
                                   'interact': false,
                                   'positionX': (item.pos[0] - 10),
                                   'positionY': (item.pos[1] - 10),
+                                  'deltaX': 0,
+                                  'deltaY': 0,
                                   'metadata': [],
                                   'cells': []
                               })
@@ -30,6 +32,8 @@ function levelBuild(items, walls) {
                                   'interact': false,
                                   'positionX': (item.pos[0] - 10),
                                   'positionY': (item.pos[1] - 10),
+                                  'deltaX': 0,
+                                  'deltaY': 0,
                                   'metadata': [],
                                   'cells': []
                               })
@@ -37,8 +41,8 @@ function levelBuild(items, walls) {
     }
 
     levelModel.append({
-                          'type': "Item",
-                          'name': "Test",
+                          'type': 'Item',
+                          'name': 'Test',
                           'health': 0,
                           'stamina': 0,
                           'maxHealth': 0,
@@ -47,6 +51,8 @@ function levelBuild(items, walls) {
                           'interact': false,
                           'positionX': 0,
                           'positionY': 0,
+                          'deltaX': 150,
+                          'deltaY': 150,
                           'metadata': [{'name': "Knife", 'type': "One hand"}],
                           'cells': [{'type': "Bag"}]
                       })
@@ -62,6 +68,8 @@ function levelBuild(items, walls) {
                           'interact': false,
                           'positionX': 0,
                           'positionY': 0,
+                          'deltaX': 0,
+                          'deltaY': 0,
                           'metadata': [],
                           'cells': []
                       })
@@ -77,6 +85,8 @@ function levelBuild(items, walls) {
                           'interact': true,
                           'positionX': 0,
                           'positionY': 0,
+                          'deltaX': 0,
+                          'deltaY': 0,
                           'metadata': [],
                           'cells': []
                       })
@@ -94,6 +104,8 @@ function levelBuild(items, walls) {
                               'interact': item.subtype !== 'default',
                               'positionX': (item.pos[0] - 10),
                               'positionY': (item.pos[1] - 10),
+                              'deltaX': 0,
+                              'deltaY': 0,
                               'metadata': [],
                               'cells': []
                           })

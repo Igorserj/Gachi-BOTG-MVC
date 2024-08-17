@@ -16,7 +16,7 @@ function entityChooser(type) {
     }
 }
 
-function entityPositioner(entity, type, positionX, positionY) {
+function entityPositioner(entity, type, positionX, positionY, deltaX, deltaY) {
     if (type === 'Hero') {
         entity.x = (scene.width - entity.width) / 2
         entity.y = (scene.height - entity.height) / 2
@@ -39,9 +39,12 @@ function entityPositioner(entity, type, positionX, positionY) {
         entity.x = entity.width * positionX
         entity.y = entity.height * positionY
     } else if (type === 'Item') {
-        entity.x = entity.width * positionX + 150
-        entity.y = entity.height * positionY + 150
+        console.log(deltaX, deltaY)
+        entity.x = scene.width * positionX - entity.width / 2
+        entity.y = scene.height * positionY - entity.height / 2
     }
+    entity.x += deltaX
+    entity.y += deltaY
 }
 
 function entityInventoryPopulation(entity, type, name, cells, metadata) {

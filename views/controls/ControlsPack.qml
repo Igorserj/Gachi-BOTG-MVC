@@ -6,15 +6,12 @@ Item {
     readonly property int thisIndex: index
     width: loader.width
     height: loader.height
-    // function controlsAction(index) {}
+    function controlsAction(index) {}
 
     Loader {
         id: loader
         sourceComponent: Pack.componentDetermine(type)
-        onLoaded: {
-            width = item.width
-            height = item.height
-        }
+        onLoaded: Pack.componentSizes(item)
     }
 
     Component {

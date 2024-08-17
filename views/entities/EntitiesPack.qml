@@ -9,7 +9,7 @@ Repeater {
         id: loader
         source: Controller.entityChooser(type)
         onLoaded: {
-            Controller.entityPositioner(item.entity, type, positionX, positionY)
+            Controller.entityPositioner(item.entity, type, positionX, positionY, deltaX, deltaY)
             Controller.entityInventoryPopulation(item, type, name, cells, metadata)
         }
     }

@@ -67,5 +67,6 @@
         <file>views/entities/Room.qml</file>
         <file>models/gui/OptionsModel.qml</file>
         <file>views/entities/FloorItem.qml</file>
+        <file>controllers/entities/dropItemController.mjs</file>
     </qresource>
 </RCC>

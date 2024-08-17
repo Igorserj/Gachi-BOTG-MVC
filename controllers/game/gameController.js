@@ -287,3 +287,10 @@ function scenePositioner() {
     scene.x = Qt.binding(() => Math.floor((hero.x + hero.width / 2) / scene.width) * -scene.width)
     scene.y = Qt.binding(() => Math.floor((hero.y + hero.height / 2) / scene.height) * -scene.height - (scene.height - window.height))
 }
+
+function cBufferClear(buffer) {
+    buffer.toItem = undefined
+    buffer.fromItem = undefined
+    buffer.fromModel = undefined
+    buffer.toItem = undefined
+}

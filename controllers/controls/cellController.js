@@ -6,8 +6,7 @@ function cellSwap() {
 
     fromItemGet.set(cBuffer.fromItem.position[1], item1)
     toItemGet.set(cBuffer.toItem.position[1], item2)
-    cBuffer.toItem = undefined
-    cBuffer.fromItem = undefined
+    game.controller.cBufferClear(cBuffer)
 }
 
 function cell() {

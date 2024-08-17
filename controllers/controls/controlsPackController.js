@@ -6,3 +6,8 @@ function componentDetermine(type) {
     else if (type === "Cells") return cells
     else if (type === "Options list") return optionsList
 }
+
+function componentSizes(item) {
+    width = item.width
+    height = item.height
+}

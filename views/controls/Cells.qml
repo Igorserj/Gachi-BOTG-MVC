@@ -7,6 +7,9 @@ Item {
     height: (0.065 * window.height + 0.01 * window.height * (Math.ceil(metadataList.count / columns) - 1) / Math.ceil(metadataList.count / columns)) * Math.ceil(metadataList.count / columns)
     Component.onCompleted: controller.cellsAlignments(index, this, invType)
 
+    MouseArea {
+        anchors.fill: parent
+    }
     Repeater {
         model: metadataList
         delegate: Item {
@@ -18,6 +21,7 @@ Item {
             Cell {}
         }
     }
+
     Connections {
         enabled: invType === 'Enemy'
         target: hero

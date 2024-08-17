@@ -3,6 +3,7 @@ import "../controls"
 
 Item {
     Row {
+        anchors.right: parent.right
         spacing: window.height * 0.025
         Repeater {
             model: game.model

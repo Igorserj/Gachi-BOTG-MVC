@@ -34,12 +34,18 @@ Item {
         property string eName: name
         property int hp: health
         property int maxHp: maxHealth
+        property string facing: 'east'
 
         property int sta: stamina
         property int maxSta: maxStamina
 
         SequentialAnimation {
             id: moveLeftAnimation
+            PropertyAction {
+                target: entity
+                property: "facing"
+                value: 'west'
+            }
             PropertyAnimation {
                 target: entity
                 property: "x"
@@ -51,6 +57,11 @@ Item {
 
         SequentialAnimation {
             id: moveRightAnimation
+            PropertyAction {
+                target: entity
+                property: "facing"
+                value: 'east'
+            }
             PropertyAnimation {
                 target: entity
                 property: "x"
@@ -62,6 +73,11 @@ Item {
 
         SequentialAnimation {
             id: moveUpAnimation
+            PropertyAction {
+                target: entity
+                property: "facing"
+                value: 'north'
+            }
             PropertyAnimation {
                 target: entity
                 property: "y"
@@ -73,6 +89,11 @@ Item {
 
         SequentialAnimation {
             id: moveDownAnimation
+            PropertyAction {
+                target: entity
+                property: "facing"
+                value: 'south'
+            }
             PropertyAnimation {
                 target: entity
                 property: "y"

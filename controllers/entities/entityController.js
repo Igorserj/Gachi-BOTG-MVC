@@ -51,16 +51,16 @@ function collisionsDetectMessage(messageObject) {
 
 function interact() {
     interactionDetectScript.sendMessage({
-                                          "entityX": collider.x,
-                                          "entityY": collider.y,
-                                          "entityHeight": collider.height,
-                                          "entityWidth": collider.width,
-                                          "index": entity.index,
-                                          "model": colliderModel,
-                                          "posX": posX,
-                                          "posY": posY,
-                                          "distance": distance
-                                      })
+                                            "entityX": collider.x,
+                                            "entityY": collider.y,
+                                            "entityHeight": collider.height,
+                                            "entityWidth": collider.width,
+                                            "index": entity.index,
+                                            "model": colliderModel,
+                                            "posX": posX,
+                                            "posY": posY,
+                                            "distance": distance
+                                        })
 }
 
 function interactionDetectMessage(messageObject) {
@@ -105,11 +105,56 @@ function pickUpItem(entityInv, model, item) {
     if (entityInv.name === '' && !!model) {
         entityInv.name = model.name
         entityInv.type = model.metadata.get(0).type
-        entityInv.columns = model.columns
         entityInv.metadataList = model.metadata
         entityInv.cellList = model.cells
         levelModel.remove(item.entityIndex)
         return true
     }
     return false
+}
+
+function dropItemMessage(entity, metadataList, cellList, script) {
+    script.sendMessage({
+                           'facing': entity.facing,
+                           'posX': entity.posX,
+                           'posY': entity.posY,
+                           'sceneWidth': scene.width,
+                           'sceneHeight': scene.height,
+                           'entityWidth': entity.width,
+                           'entityHeight': entity.height,
+                           'entityX': entity.x,
+                           'entityY': entity.y,
+                           'levelModel': levelModel,
+                           'colliderModel': colliderModel
+                       })
+}
+
+function dropItem(messageObject, cBuffer, controller) {
+    if (!messageObject.collide) {
+        const metadataList = cBuffer.fromModel.get(cBuffer.fromItem.position[0]).metadataList
+        const cellList = cBuffer.fromModel.get(cBuffer.fromItem.position[0]).cellList
+
+        levelModel.append({
+                              'type': 'Item',
+                              'name': metadataList.get(cBuffer.fromItem.position[1]).name,
+                              'health': 0,
+                              'stamina': 0,
+                              'maxHealth': 0,
+                              'maxStamina': 0,
+                              'modelState': 'default',
+                              'interact': false,
+                              'positionX': messageObject.posX,
+                              'positionY': messageObject.posY,
+                              'deltaX': messageObject.deltaX,
+                              'deltaY': messageObject.deltaY,
+                              'metadata': [{'name': metadataList.get(cBuffer.fromItem.position[1]).name, 'type': metadataList.get(cBuffer.fromItem.position[1]).type}],
+                              'cells': [{'type': cellList.get(cBuffer.fromItem.position[1]).type}]
+                          })
+
+        metadataList.setProperty(cBuffer.fromItem.position[1], 'name', '')
+        metadataList.setProperty(cBuffer.fromItem.position[1], 'type', '')
+        metadataList.set(cBuffer.fromItem.position[1], [])
+        cellList.set(cBuffer.fromItem.position[1], [])
+        controller.cBufferClear(cBuffer)
+    }
 }
