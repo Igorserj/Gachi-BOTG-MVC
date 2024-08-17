@@ -12,8 +12,8 @@ Item {
     property bool showBoundaries: false
     readonly property var controller: Controller
     focus: true
-    Keys.onPressed: event => controller.keyAction(event.key, event.nativeScanCode, event.isAutoRepeat)
-    Keys.onReleased: event => controller.keyReleaseAction(event.key, event.nativeScanCode, event.isAutoRepeat)
+    Keys.onPressed: event => controller.keyAction(event.key, event.nativeScanCode, event.isAutoRepeat, event.modifiers)
+    Keys.onReleased: event => controller.keyReleaseAction(event.key, event.nativeScanCode, event.isAutoRepeat, event.modifiers)
 
     Generator {}
     Scene {

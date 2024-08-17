@@ -39,7 +39,6 @@ function entityPositioner(entity, type, positionX, positionY, deltaX, deltaY) {
         entity.x = entity.width * positionX
         entity.y = entity.height * positionY
     } else if (type === 'Item') {
-        console.log(deltaX, deltaY)
         entity.x = scene.width * positionX - entity.width / 2
         entity.y = scene.height * positionY - entity.height / 2
     }

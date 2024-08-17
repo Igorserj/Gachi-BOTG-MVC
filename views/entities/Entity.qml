@@ -102,6 +102,22 @@ Item {
             }
             onStopped: if (allowDown) moveDownAnimation.start()
         }
+
+        SequentialAnimation {
+            id: runAnimation
+            PropertyAction {
+                 target: entity.parent
+                 property: "distance"
+                 value: distance * 1.5
+            }
+            PropertyAnimation {
+                target: entity
+                property: "sta"
+                to: entity.sta - 5
+                duration: baseAnimationDuration
+            }
+            onStopped: distance /= 1.5
+        }
     }
     EntityInventoryModel {
         id: entityInventoryModel

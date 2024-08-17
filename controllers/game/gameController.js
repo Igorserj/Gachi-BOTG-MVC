@@ -21,6 +21,24 @@ function actionMainGUI() {
     guiLoader.source = `${routes.views[0].gui}/MainGUI.qml`
 }
 
+function updateMainGUI(type) {
+    if (type === 'hp') {
+        mainGUIModel.set(1, {
+                             type: "Scaler",
+                             units: "HP",
+                             value: hero.hp,
+                             maxValue: hero.maxHp
+                         })
+    } else if (type === 'sta') {
+        mainGUIModel.set(2, {
+                             type: "Scaler",
+                             units: "SP",
+                             value: hero.sta,
+                             maxValue: hero.maxSta
+                         })
+    }
+}
+
 function actionMenu() {
     if (model !== menuModel) {
         model = menuModel
@@ -123,8 +141,8 @@ function settingsButtons(index) {
     }
 }
 
-function keyAction(key, code, isAutoRepeat) {
-    console.log(code)
+function keyAction(key, code, isAutoRepeat, modifiers) {
+    console.log(code, modifiers)
     if (key === Qt.Key_Escape) {
         actionMenu()
     } else if (/*key === Qt.Key_I*/ code === 31) {
@@ -150,6 +168,9 @@ function keyAction(key, code, isAutoRepeat) {
     } else if (/*key === Qt.Key_E*/ code === 26) {
         hero.controller.interact()
     }
+    if (modifiers === Qt.ShiftModifier) {
+        hero.controller.startRun()
+    }
 }
 
 function keyReleaseAction(key, code, isAutoRepeat) {
@@ -166,6 +187,8 @@ function keyReleaseAction(key, code, isAutoRepeat) {
         } else if (code === 40) {
             hero.parent.allowRight = false
             hero.controller.stopMoveRight()
+        // } else if (code === 50) {
+        //     hero.controller.stopRun()
         }
     }
 }

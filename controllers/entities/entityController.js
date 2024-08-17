@@ -35,6 +35,16 @@ function stopMoveDown() {
     moveDownAnimation.stop()
 }
 
+function startRun() {
+    if (entity.sta > 0) {
+        runAnimation.start()
+    }
+}
+
+function stopRun() {
+    runAnimation.stop()
+}
+
 function collisionsDetectMessage(messageObject) {
     const direction = messageObject.direction
 
@@ -156,5 +166,7 @@ function dropItem(messageObject, cBuffer, controller) {
         metadataList.set(cBuffer.fromItem.position[1], [])
         cellList.set(cBuffer.fromItem.position[1], [])
         controller.cBufferClear(cBuffer)
+    } else {
+        console.log("Can't drop item here")
     }
 }
