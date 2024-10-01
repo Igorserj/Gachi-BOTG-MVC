@@ -36,7 +36,7 @@ function stopMoveDown() {
 }
 
 function startRun() {
-    if (entity.sta > 0) {
+    if (entity.sta > 0 && (moveUpAnimation.running || moveDownAnimation.running || moveLeftAnimation.running || moveRightAnimation.running)) {
         runAnimation.start()
     }
 }
@@ -69,7 +69,7 @@ function interact() {
                                             "model": colliderModel,
                                             "posX": posX,
                                             "posY": posY,
-                                            "distance": distance
+                                            "distance": entity.dist
                                         })
 }
 
@@ -111,21 +111,27 @@ function lootAction(entity) {
     game.controller.actionInventory(entity)
 }
 
-function pickUpItem(entityInv, model, item) {
+function pickUpItem(entityInv, model, item, effectsList, k) {
     if (entityInv.name === '' && !!model) {
         entityInv.name = model.name
         entityInv.type = model.metadata.get(0).type
         entityInv.metadataList = model.metadata
         entityInv.cellList = model.cells
+        console.log(Object.keys(entityInv))
+        for (let j = 0; j < model.effects.count; ++j) {
+            console.log("effect name", model.effects.get(j).name)
+            effectsList.set(k, model.effects.get(j))
+        }
         levelModel.remove(item.entityIndex)
+        console.log('list1', effectsList)
         return true
     }
     return false
 }
 
-function dropItemMessage(entity, metadataList, cellList, script) {
+function dropItemMessage(entity, script) {
     script.sendMessage({
-                           'facing': entity.facing,
+                           'facing': entity.face,
                            'posX': entity.posX,
                            'posY': entity.posY,
                            'sceneWidth': scene.width,
@@ -143,6 +149,7 @@ function dropItem(messageObject, cBuffer, controller) {
     if (!messageObject.collide) {
         const metadataList = cBuffer.fromModel.get(cBuffer.fromItem.position[0]).metadataList
         const cellList = cBuffer.fromModel.get(cBuffer.fromItem.position[0]).cellList
+        const effectsList = cBuffer.fromModel.get(cBuffer.fromItem.position[0]).effectsList
 
         levelModel.append({
                               'type': 'Item',
@@ -158,12 +165,14 @@ function dropItem(messageObject, cBuffer, controller) {
                               'deltaX': messageObject.deltaX,
                               'deltaY': messageObject.deltaY,
                               'metadata': [{'name': metadataList.get(cBuffer.fromItem.position[1]).name, 'type': metadataList.get(cBuffer.fromItem.position[1]).type}],
+                              'effects': effectsList/*metadataList.get(cBuffer.fromItem.position[1]).effects*/,
                               'cells': [{'type': cellList.get(cBuffer.fromItem.position[1]).type}]
                           })
 
         metadataList.setProperty(cBuffer.fromItem.position[1], 'name', '')
         metadataList.setProperty(cBuffer.fromItem.position[1], 'type', '')
         metadataList.set(cBuffer.fromItem.position[1], [])
+        effectsList.setProperty(cBuffer.fromItem.position[1], 'name', '')
         cellList.set(cBuffer.fromItem.position[1], [])
         controller.cBufferClear(cBuffer)
     } else {

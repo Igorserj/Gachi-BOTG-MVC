@@ -317,3 +317,25 @@ function cBufferClear(buffer) {
     buffer.fromModel = undefined
     buffer.toItem = undefined
 }
+
+function effectGeneration(entity, effects, model, idx) {
+    console.log("effect gen", effects.get(idx).name)
+    // for (let i = 0; i < model.count; ++i) {
+        // for (let j = 0; j < effects.count; ++j) {
+        // }
+        // if (effects.name === model.get(i).name) {
+        //     console.log('gotcha', model.get(i).mode)
+
+        // }
+    // }
+    // name: 'Health regeneration'
+    // mode: 'buff'
+    // characteristic: 'Health'
+    // type: 'continuous'
+    // subtype: 'non trigger'
+    // duration: 5000
+    // period: 1000
+    // activation: 'start'
+    // points: 10
+    // identifier: -1
+}

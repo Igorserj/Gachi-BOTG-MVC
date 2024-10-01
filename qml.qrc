@@ -61,12 +61,17 @@
         <file>views/controls/OptionsList.qml</file>
         <file>controllers/entities/colliderDetectController.js</file>
         <file>views/gui/Options.qml</file>
-        <file>models/game/EntityInventoryModel.qml</file>
         <file>models/gui/DebugModel.qml</file>
         <file>controllers/gui/debugController.js</file>
         <file>views/entities/Room.qml</file>
         <file>models/gui/OptionsModel.qml</file>
         <file>views/entities/FloorItem.qml</file>
         <file>controllers/entities/dropItemController.mjs</file>
+        <file>views/entities/EntityProps.qml</file>
+        <file>models/game/EffectModel.qml</file>
+        <file>controllers/entities/effectController.js</file>
+        <file>models/entity/EntityEffectsModel.qml</file>
+        <file>models/entity/EntityInventoryModel.qml</file>
+        <file>views/entities/EffectsGenerator.qml</file>
     </qresource>
 </RCC>

@@ -6,6 +6,6 @@ Rectangle {
     border.width: 1
     border.color: showBoundaries ? "lightgreen" : "transparent"
     Component.onCompleted: colliderModel.append({ 'item': this, 'type': type, 'index': index, 'posX': positionX, 'posY': positionY, 'interact': interact })
-    onXChanged: Controller.collistionDetectScript(entity, distance, noClip, posX, posY, colliderModel)
-    onYChanged: Controller.collistionDetectScript(entity, distance, noClip, posX, posY, colliderModel)
+    onXChanged: Controller.collistionDetectScript(entity, dist, noClip, posX, posY, colliderModel)
+    onYChanged: Controller.collistionDetectScript(entity, dist, noClip, posX, posY, colliderModel)
 }

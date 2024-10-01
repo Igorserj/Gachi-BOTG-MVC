@@ -1,5 +1,5 @@
 import QtQuick 2.15
-import "../../models/game"
+import "../../models/entity"
 import "../../controllers/entities/entityController.js" as Controller
 
 Item {
@@ -8,7 +8,8 @@ Item {
     property alias posX: entity.posX
     property alias posY: entity.posY
     property alias inventory: entityInventoryModel
-    property double distance: 50
+    property alias effectsList: entityEffectsModel
+    property double dist: entity.dist
     property double baseAnimationDuration: 250
 
     property bool allowUp: false
@@ -24,32 +25,46 @@ Item {
     height: 1 / 11 * window.height
     width: height
 
+    EntityProps {
+        id: props
+    }
+
     Rectangle {
         id: entity
         width: parent.width
         height: parent.height
         readonly property var controller: Controller
-        property int posX: positionX
-        property int posY: positionY
-        property string eName: name
-        property int hp: health
-        property int maxHp: maxHealth
-        property string facing: 'east'
+        property int posX: typeof(positionX) !== 'undefined' ? positionX : props.positionX
+        property int posY: typeof(positionY) !== 'undefined' ? positionY : props.positionY
+        property string eName: typeof(name) !== 'undefined' ? name : props.name
 
-        property int sta: stamina
-        property int maxSta: maxStamina
+        property double hp: typeof(health) !== 'undefined' ? health : props.health
+        property int maxHp: typeof(maxHealth) !== 'undefined' ? maxHealth : props.maxHealth
+        property int hpReg: typeof(hpRegen) !== 'undefined' ? hpRegen : props.hpRegen
+
+        property int sta: typeof(stamina) !== 'undefined' ? stamina : props.stamina
+        property int maxSta: typeof(maxStamina) !== 'undefined' ? maxStamina : props.maxStamina
+        property int staReg: typeof(staminaRegen) !== 'undefined' ? staminaRegen : props.staminaRegen
+
+        property double atk: typeof(attack) !== 'undefined' ? attack : props.attack
+        property int atkSpd: typeof(attackSpeed) !== 'undefined' ? attackSpeed : props.attackSpeed
+        property int atkRng: typeof(attackRange) !== 'undefined' ? attackRange : props.attackRange
+
+        property int def: typeof(defense) !== 'undefined' ? defense : props.defense
+        property int dist: typeof(distance) !== 'undefined' ? distance : props.distance
+        property string face: typeof(facing) !== 'undefined' ? facing : props.facing
 
         SequentialAnimation {
             id: moveLeftAnimation
             PropertyAction {
                 target: entity
-                property: "facing"
+                property: "face"
                 value: 'west'
             }
             PropertyAnimation {
                 target: entity
                 property: "x"
-                to: entity.x - distance
+                to: entity.x - dist
                 duration: baseAnimationDuration
             }
             onStopped: if (allowLeft) moveLeftAnimation.start()
@@ -59,13 +74,13 @@ Item {
             id: moveRightAnimation
             PropertyAction {
                 target: entity
-                property: "facing"
+                property: "face"
                 value: 'east'
             }
             PropertyAnimation {
                 target: entity
                 property: "x"
-                to: entity.x + distance
+                to: entity.x + dist
                 duration: baseAnimationDuration
             }
             onStopped: if (allowRight) moveRightAnimation.start()
@@ -75,13 +90,13 @@ Item {
             id: moveUpAnimation
             PropertyAction {
                 target: entity
-                property: "facing"
+                property: "face"
                 value: 'north'
             }
             PropertyAnimation {
                 target: entity
                 property: "y"
-                to: entity.y - distance
+                to: entity.y - dist
                 duration: baseAnimationDuration
             }
             onStopped: if (allowUp) moveUpAnimation.start()
@@ -91,13 +106,13 @@ Item {
             id: moveDownAnimation
             PropertyAction {
                 target: entity
-                property: "facing"
+                property: "face"
                 value: 'south'
             }
             PropertyAnimation {
                 target: entity
                 property: "y"
-                to: entity.y + distance
+                to: entity.y + dist
                 duration: baseAnimationDuration
             }
             onStopped: if (allowDown) moveDownAnimation.start()
@@ -107,8 +122,8 @@ Item {
             id: runAnimation
             PropertyAction {
                  target: entity.parent
-                 property: "distance"
-                 value: distance * 1.5
+                 property: "dist"
+                 value: dist * 1.5
             }
             PropertyAnimation {
                 target: entity
@@ -116,12 +131,18 @@ Item {
                 to: entity.sta - 5
                 duration: baseAnimationDuration
             }
-            onStopped: distance /= 1.5
+            onStopped: dist /= 1.5
         }
     }
     EntityInventoryModel {
         id: entityInventoryModel
     }
+
+    EntityEffectsModel {
+        id: entityEffectsModel
+    }
+
+    EffectsGenerator {}
 
     Collider {
         id: collider

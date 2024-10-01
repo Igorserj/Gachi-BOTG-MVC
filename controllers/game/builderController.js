@@ -18,7 +18,8 @@ function levelBuild(items, walls) {
                                   'deltaX': 0,
                                   'deltaY': 0,
                                   'metadata': [],
-                                  'cells': []
+                                  'cells': [],
+                                  'effects': []
                               })
         } else if (item.type === "room") {
             levelModel.append({
@@ -35,7 +36,8 @@ function levelBuild(items, walls) {
                                   'deltaX': 0,
                                   'deltaY': 0,
                                   'metadata': [],
-                                  'cells': []
+                                  'cells': [],
+                                  'effects': []
                               })
         }
     }
@@ -54,7 +56,8 @@ function levelBuild(items, walls) {
                           'deltaX': 150,
                           'deltaY': 150,
                           'metadata': [{'name': "Knife", 'type': "One hand"}],
-                          'cells': [{'type': "Bag"}]
+                          'cells': [{'type': "Bag"}],
+                          'effects': [{'name': 'Health regeneration', 'identifier': 2, 'duration': 100}]
                       })
 
     levelModel.append({
@@ -71,7 +74,8 @@ function levelBuild(items, walls) {
                           'deltaX': 0,
                           'deltaY': 0,
                           'metadata': [],
-                          'cells': []
+                          'cells': [],
+                          'effects': []
                       })
 
     levelModel.append({
@@ -88,7 +92,8 @@ function levelBuild(items, walls) {
                           'deltaX': 0,
                           'deltaY': 0,
                           'metadata': [],
-                          'cells': []
+                          'cells': [],
+                          'effects': []
                       })
 
     for (i = 0; i < walls.length; ++i) {
@@ -107,7 +112,8 @@ function levelBuild(items, walls) {
                               'deltaX': 0,
                               'deltaY': 0,
                               'metadata': [],
-                              'cells': []
+                              'cells': [],
+                              'effects': []
                           })
     }
 }
