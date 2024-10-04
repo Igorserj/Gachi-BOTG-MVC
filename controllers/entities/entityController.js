@@ -36,7 +36,13 @@ function stopMoveDown() {
 }
 
 function startRun() {
-    if (entity.sta > 0 && (moveUpAnimation.running || moveDownAnimation.running || moveLeftAnimation.running || moveRightAnimation.running)) {
+    if (entity.sta > 0 && (
+                moveUpAnimation.running ||
+                moveDownAnimation.running ||
+                moveLeftAnimation.running ||
+                moveRightAnimation.running
+                )
+            ) {
         runAnimation.start()
     }
 }
@@ -150,10 +156,12 @@ function dropItem(messageObject, cBuffer, controller) {
         const metadataList = cBuffer.fromModel.get(cBuffer.fromItem.position[0]).metadataList
         const cellList = cBuffer.fromModel.get(cBuffer.fromItem.position[0]).cellList
         const effectsList = cBuffer.fromModel.get(cBuffer.fromItem.position[0]).effectsList
-
+        const meta = new Metadatas(metadataList.get(cBuffer.fromItem.position[1]))
+        const cell = new Cells(cellList.get(cBuffer.fromItem.position[1]))
+        const effect = new Effects(effectsList.get(cBuffer.fromItem.position[1]))
         levelModel.append({
                               'type': 'Item',
-                              'name': metadataList.get(cBuffer.fromItem.position[1]).name,
+                              'name': meta.name,
                               'health': 0,
                               'stamina': 0,
                               'maxHealth': 0,
@@ -164,9 +172,9 @@ function dropItem(messageObject, cBuffer, controller) {
                               'positionY': messageObject.posY,
                               'deltaX': messageObject.deltaX,
                               'deltaY': messageObject.deltaY,
-                              'metadata': [{'name': metadataList.get(cBuffer.fromItem.position[1]).name, 'type': metadataList.get(cBuffer.fromItem.position[1]).type}],
-                              'effects': effectsList/*metadataList.get(cBuffer.fromItem.position[1]).effects*/,
-                              'cells': [{'type': cellList.get(cBuffer.fromItem.position[1]).type}]
+                              'metadata': meta.constr,
+                              'effects': effect.constr,
+                              'cells': cell.constr
                           })
 
         metadataList.setProperty(cBuffer.fromItem.position[1], 'name', '')
@@ -177,5 +185,37 @@ function dropItem(messageObject, cBuffer, controller) {
         controller.cBufferClear(cBuffer)
     } else {
         console.log("Can't drop item here")
+    }   
+}
+
+class Effects {
+    constructor(effect) {
+        this.constr = [{}]
+        if (!!effect.name) this.constr[0].name = effect.name
+        if (!!effect.mode) this.constr[0].mode = effect.mode
+        if (!!effect.characteristic) this.constr[0].characteristic = effect.characteristic
+        if (!!effect.type) this.constr[0].type = effect.type
+        if (!!effect.subtype) this.constr[0].subtype = effect.subtype
+        if (!!effect.duration) this.constr[0].duration = effect.duration
+        if (!!effect.period) this.constr[0].period = effect.period
+        if (!!effect.activation) this.constr[0].activation = effect.activation
+        if (!!effect.points) this.constr[0].points = effect.points
+        if (!!effect.identifier) this.constr[0].identifier = effect.identifier
+    }
+}
+
+class Metadatas {
+    constructor(meta) {
+        this.name = meta.name
+        this.constr = [{}]
+        this.constr[0].name = meta.name
+        this.constr[0].type = meta.type
+    }
+}
+
+class Cells {
+    constructor(cell) {
+        this.constr = [{}]
+        this.constr[0].type = cell.type
     }
 }

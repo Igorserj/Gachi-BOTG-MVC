@@ -3,10 +3,6 @@ import "../controls"
 
 Item {
 
-    CellBuffer {
-        id: cBuffer
-    }
-
     MouseArea {
         id: inventoryArea
         anchors.fill: parent
@@ -25,6 +21,10 @@ Item {
             model: inv
             delegate: ControlsPack {}
         }
+    }
+
+    CellBuffer {
+        id: cBuffer
     }
 
     WorkerScript {

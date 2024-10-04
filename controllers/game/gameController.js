@@ -198,6 +198,15 @@ function cellBufferMovement(corX, corY, cBuffer) {
     cBuffer.y = corY
 }
 
+function cellMovement(corX, corY, cBuffer) {
+    cellBufferMovement(corX, corY, cBuffer)
+    if (cBuffer.state === "nothing") cBuffer.state = "description"
+}
+
+function cellStopMovement(cBuffer) {
+    if (cBuffer.state === "description") cBuffer.state = "nothing"
+}
+
 function optionInteract(entity) {
     addLoaderUnload()
     entity.active = true
@@ -316,6 +325,7 @@ function cBufferClear(buffer) {
     buffer.fromItem = undefined
     buffer.fromModel = undefined
     buffer.toItem = undefined
+    buffer.state = "nothing"
 }
 
 function effectGeneration(entity, effects, model, idx) {

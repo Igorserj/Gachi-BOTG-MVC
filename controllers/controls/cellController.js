@@ -23,12 +23,14 @@ function cellSwap() {
 function cell() {
     console.log('list2', effectsList)
     if (!!!cBuffer.fromItem && name !== '') {
+        cBuffer.state = "movement"
         cBuffer.fromItem = { metadata: metadataList, position: [cellsItem.i, index], effects: effectsList }
         cBuffer.fromModel = inv
         for (let j = 0; j < effectsList.count; ++j) {
             console.log('efList', effectsList.get(j).name, cBuffer.fromItem.position)
         }
     } else if (!!cBuffer.fromItem && !(cBuffer.fromItem.position[0] === cellsItem.i && cBuffer.fromItem.position[1] === index) && typeCompat()) {
+        cBuffer.state = "description"
         cBuffer.toItem = { metadata: metadataList, position: [cellsItem.i, index], effects: effectsList }
         cBuffer.toModel = inv
         effectControl()
