@@ -26,7 +26,7 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         hoverEnabled: true
-        onEntered: controller.cellMovement(Qt.binding(() => mouseX + cellRect.parent.x + cellsItem.x), Qt.binding(() => mouseY + cellRect.parent.y + cellsItem.y), cBuffer)
+        onEntered: controller.cellMovement(Qt.binding(() => mouseX + cellRect.parent.x + cellsItem.x), Qt.binding(() => mouseY + cellRect.parent.y + cellsItem.y), cBuffer, effectsList.get(index), cellList.get(index).type, metadataList.get(index).type)
         onExited: controller.cellStopMovement(cBuffer)
         onClicked: Controller.cell()
     }

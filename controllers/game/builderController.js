@@ -17,8 +17,8 @@ function levelBuild(items, walls) {
                                   'positionY': (item.pos[1] - 10),
                                   'deltaX': 0,
                                   'deltaY': 0,
-                                  'metadata': [],
-                                  'cells': [],
+                                  'metadata': {},
+                                  'cells': {},
                                   'effects': []
                               })
         } else if (item.type === "room") {
@@ -35,8 +35,8 @@ function levelBuild(items, walls) {
                                   'positionY': (item.pos[1] - 10),
                                   'deltaX': 0,
                                   'deltaY': 0,
-                                  'metadata': [],
-                                  'cells': [],
+                                  'metadata': {},
+                                  'cells': {},
                                   'effects': []
                               })
         }
@@ -55,9 +55,9 @@ function levelBuild(items, walls) {
                           'positionY': 0,
                           'deltaX': 150,
                           'deltaY': 150,
-                          'metadata': [{'name': "Knife", 'type': "One hand"}],
-                          'cells': [{'type': "Bag"}],
-                          'effects': [{'name': 'Health regeneration', 'identifier': 2, 'duration': 100}]
+                          'metadata': {'name': "Knife", 'type': "One hand"},
+                          'cells': {'type': "Bag"},
+                          'effects': [{'name': 'Health regeneration', 'identifier': 2, 'duration': 100}, {'name': 'Stamina regeneration', 'identifier': 3, 'duration': 100}]
                       })
 
     levelModel.append({
@@ -73,8 +73,8 @@ function levelBuild(items, walls) {
                           'positionY': 0,
                           'deltaX': 0,
                           'deltaY': 0,
-                          'metadata': [],
-                          'cells': [],
+                          'metadata': {},
+                          'cells': {},
                           'effects': []
                       })
 
@@ -91,8 +91,8 @@ function levelBuild(items, walls) {
                           'positionY': 0,
                           'deltaX': 0,
                           'deltaY': 0,
-                          'metadata': [],
-                          'cells': [],
+                          'metadata': {},
+                          'cells': {},
                           'effects': []
                       })
 
@@ -111,8 +111,8 @@ function levelBuild(items, walls) {
                               'positionY': (item.pos[1] - 10),
                               'deltaX': 0,
                               'deltaY': 0,
-                              'metadata': [],
-                              'cells': [],
+                              'metadata': {},
+                              'cells': {},
                               'effects': []
                           })
     }

@@ -5,7 +5,6 @@
         <file>views/mainMenu/LoadGame.qml</file>
         <file>views/mainMenu/Menu.qml</file>
         <file>views/mainMenu/Settings.qml</file>
-        <file>config/Routes.qml</file>
         <file>views/controls/Button.qml</file>
         <file>views/mainMenu/MainMenu.qml</file>
         <file>views/controls/ControlsPack.qml</file>
@@ -73,5 +72,6 @@
         <file>models/entity/EntityEffectsModel.qml</file>
         <file>models/entity/EntityInventoryModel.qml</file>
         <file>views/entities/EffectsGenerator.qml</file>
+        <file>config/routes.js</file>
     </qresource>
 </RCC>

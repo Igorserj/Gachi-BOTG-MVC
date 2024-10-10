@@ -36,8 +36,9 @@ function collistionDetectScript(entity, distance, noClip, posX, posY, colliderMo
     function pickUpAction() {
         const count = parent.inventory.get(0).metadataList.count
         for (j = 0; j < count; ++j) {
-            if (entity.controller.pickUpItem(parent.inventory.get(0).metadataList.get(j), levelModel.get(item.parent.entityIndex), item.parent, parent.inventory.get(0).effectsList, j)) {
-                console.log('Vals', Object.keys(parent.inventory.get(0).effectsList.get(0)), parent.inventory.get(0).effectsList)
+            if (entity.controller.pickUpItem(parent.inventory.get(0).metadataList, levelModel.get(item.parent.entityIndex), item.parent, parent.inventory.get(0).effectsList, j)) {
+                // console.log('Vals', Object.keys(parent.inventory.get(0).effectsList.get(0)), parent.inventory.get(0).effectsList)
+                console.log(parent.inventory.get(0).effectsList.count)
                 j = count
             }
         }

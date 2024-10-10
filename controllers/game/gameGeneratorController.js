@@ -500,5 +500,5 @@ function floorGen(seed, floor) {
     // nodes = JSON.parse(JSON.stringify(nodes))
     // blocks = JSON.parse(JSON.stringify(blocks))
     poses = [...blocks, ...rooms, ...passes].map(it => it.pos)
-    return { items: [...blocks, ...rooms, ...passes], poses: poses, connects: connects, walls: walls }
+    return { "items": [...blocks, ...rooms, ...passes], "poses": poses, "connects": connects, "walls": walls }
 }

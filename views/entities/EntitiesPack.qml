@@ -11,7 +11,6 @@ Repeater {
         onLoaded: {
             Controller.entityPositioner(item.entity, type, positionX, positionY, deltaX, deltaY)
             Controller.entityInventoryPopulation(item, type, name, cells, metadata, effects)
-            // Controller.entityEffectPopulation(item, effects)
         }
     }
 }

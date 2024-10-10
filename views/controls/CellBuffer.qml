@@ -6,6 +6,7 @@ Rectangle {
     property var toItem
     property var fromModel
     property var toModel
+    property string desc: ""
     width: 0.065 * window.height
     height: 0.065 * window.height
     state: "nothing"
@@ -24,6 +25,7 @@ Rectangle {
                 target: buffer
                 visible: true
                 color: "#77888888"
+                desc: ""
             }
         },
         State {
@@ -32,7 +34,12 @@ Rectangle {
                 target: buffer
                 visible: false
                 color: "#000000"
+                desc: ""
             }
         }
     ]
+    Text {
+        text: desc
+        color: "black"
+    }
 }

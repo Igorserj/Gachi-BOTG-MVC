@@ -13,7 +13,7 @@ Item {
     Repeater {
         model: metadataList
         delegate: Item {
-            property double frameSize: 0.075 * window.height
+            readonly property double frameSize: 0.075 * window.height
             width: frameSize
             height: frameSize
             x: index + 1 > Math.floor(metadataList.count / columns) * columns ? ((frameSize * columns) - (width * (metadataList.count - (Math.floor(metadataList.count / columns) * columns)))) / 2 + (metadataList.count - (Math.floor(metadataList.count / columns) * columns) - (metadataList.count - (index))) * width : (index % columns) * width

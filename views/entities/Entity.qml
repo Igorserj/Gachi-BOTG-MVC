@@ -151,7 +151,7 @@ Item {
 
     WorkerScript {
         id: interactionDetectScript
-        source: `${routes.controllers[0].entities}/interactionController.mjs`
+        source: `${routes.controllers.entities}/interactionController.mjs`
         onMessage: messageObject => Controller.interactionDetectMessage(messageObject)
     }
 }

@@ -1,40 +1,40 @@
 function actionMainGUI() {
     mainGUIModel.clear()
     mainGUIModel.append({
-                            name: hero.eName,
-                            type: "Button",
+                            "name": hero.eName,
+                            "type": "Button",
                         })
     mainGUIModel.append({
-                            type: "Scaler",
-                            units: "HP",
-                            value: hero.hp,
-                            maxValue: hero.maxHp
+                            "type": "Scaler",
+                            "units": "HP",
+                            "value": hero.hp,
+                            "maxValue": hero.maxHp
                         })
     mainGUIModel.append({
-                            type: "Scaler",
-                            units: "SP",
-                            value: hero.sta,
-                            maxValue: hero.maxSta
+                            "type": "Scaler",
+                            "units": "SP",
+                            "value": hero.sta,
+                            "maxValue": hero.maxSta
                         })
 
     model = mainGUIModel
-    guiLoader.source = `${routes.views[0].gui}/MainGUI.qml`
+    guiLoader.source = `${routes.views.gui}/MainGUI.qml`
 }
 
 function updateMainGUI(type) {
     if (type === 'hp') {
         mainGUIModel.set(1, {
-                             type: "Scaler",
-                             units: "HP",
-                             value: hero.hp,
-                             maxValue: hero.maxHp
+                             "type": "Scaler",
+                             "units": "HP",
+                             "value": hero.hp,
+                             "maxValue": hero.maxHp
                          })
     } else if (type === 'sta') {
         mainGUIModel.set(2, {
-                             type: "Scaler",
-                             units: "SP",
-                             value: hero.sta,
-                             maxValue: hero.maxSta
+                             "type": "Scaler",
+                             "units": "SP",
+                             "value": hero.sta,
+                             "maxValue": hero.maxSta
                          })
     }
 }
@@ -42,7 +42,7 @@ function updateMainGUI(type) {
 function actionMenu() {
     if (model !== menuModel) {
         model = menuModel
-        guiLoader.source = `${routes.views[0].gui}/Menu.qml`
+        guiLoader.source = `${routes.views.gui}/Menu.qml`
     } else {
         actionContinue()
     }
@@ -54,16 +54,16 @@ function actionContinue() {
 
 function actionSettings() {
     model = settingsModel
-    guiLoader.source = `${routes.views[0].gui}/Settings.qml`
+    guiLoader.source = `${routes.views.gui}/Settings.qml`
 }
 
 function actionDebug() {
     model = debugModel
-    guiLoader.source = `${routes.views[0].gui}/Debug.qml`
+    guiLoader.source = `${routes.views.gui}/Debug.qml`
 }
 
 function actionMainMenu() {
-    mainLoader.source = routes.resources[0].mainMenu
+    mainLoader.source = routes.resources.mainMenu
 }
 
 function actionQuit() {
@@ -81,7 +81,7 @@ function actionInventory(entity) {
                 entity.parent.active = false
             }
             addModel = item
-            addLoader.source = `${routes.views[0].gui}/Inventory.qml`
+            addLoader.source = `${routes.views.gui}/Inventory.qml`
         } else if (addLoader.status === Loader.Ready) {
             addLoaderUnload()
         }
@@ -92,7 +92,7 @@ function actionEntities() {
     if (!!addLoader) {
         if (addLoader.status === Loader.Null) {
             addModel = optionsModel
-            addLoader.source = `${routes.views[0].gui}/Options.qml`
+            addLoader.source = `${routes.views.gui}/Options.qml`
         } else if (addLoader.status === Loader.Ready) {
             optionsModel.clear()
         }
@@ -198,9 +198,18 @@ function cellBufferMovement(corX, corY, cBuffer) {
     cBuffer.y = corY
 }
 
-function cellMovement(corX, corY, cBuffer) {
+function cellMovement(corX, corY, cBuffer, effect, type, type2) {
     cellBufferMovement(corX, corY, cBuffer)
-    if (cBuffer.state === "nothing") cBuffer.state = "description"
+    if (cBuffer.state === "nothing") {
+        cBuffer.state = "description"
+        console.log(Object.keys(effect))
+        let desc = ""
+        for (let l = 0; l < Object.keys(effect).length; ++l) {
+            desc += `${effect[l].name} ${effect[l].duration} ${effect[l].identifier} ${effect[l].mode} ${type} ${type2}
+`
+        }
+        cBuffer.desc = desc
+    }
 }
 
 function cellStopMovement(cBuffer) {
@@ -216,7 +225,7 @@ function openMap() {
     if (!!addLoader) {
         if (addLoader.status === Loader.Null) {
             addModel = mapModel
-            addLoader.source = `${routes.views[0].gui}/Map.qml`
+            addLoader.source = `${routes.views.gui}/Map.qml`
         } else if (addLoader.status === Loader.Ready) {
             addLoaderUnload()
         }
@@ -329,23 +338,29 @@ function cBufferClear(buffer) {
 }
 
 function effectGeneration(entity, effects, model, idx) {
-    console.log("effect gen", effects.get(idx).name)
-    // for (let i = 0; i < model.count; ++i) {
+    for (let i = 0; i < model.count; ++i) {
         // for (let j = 0; j < effects.count; ++j) {
-        // }
-        // if (effects.name === model.get(i).name) {
-        //     console.log('gotcha', model.get(i).mode)
 
         // }
-    // }
-    // name: 'Health regeneration'
-    // mode: 'buff'
-    // characteristic: 'Health'
-    // type: 'continuous'
-    // subtype: 'non trigger'
-    // duration: 5000
-    // period: 1000
-    // activation: 'start'
-    // points: 10
-    // identifier: -1
+        if (effects.get(idx).name === model.get(i).name) {
+            const effect = effects.get(idx)
+            const modelEffect = model.get(i)
+            const newEffect = new NewEffect(effect, modelEffect)
+            effects.set(idx, newEffect)
+        }
+    }
+}
+
+class NewEffect {
+    constructor(effect, modelEffect) {
+        this.name = !!effect.name ? effect.name : modelEffect.name
+        this.mode = !!effect.mode ? effect.mode : modelEffect.mode
+        this.characteristic = !!effect.characteristic ? effect.characteristic : modelEffect.characteristic
+        this.type = !!effect.type ? effect.type : modelEffect.type
+        this.subtype = !!effect.subtype ? effect.subtype : modelEffect.subtype
+        this.duration = !!effect.duration ? effect.duration : modelEffect.duration
+        this.period = !!effect.period ? effect.period : modelEffect.period
+        this.activation = !!effect.activation ? effect.activation : modelEffect.activation
+        this.points = !!effect.points ? effect.points : modelEffect.points
+    }
 }

@@ -117,19 +117,33 @@ function lootAction(entity) {
     game.controller.actionInventory(entity)
 }
 
-function pickUpItem(entityInv, model, item, effectsList, k) {
+function pickUpItem(inv, model, item, effectsList, k) {
+    const entityInv = inv.get(k)
+    const effects = []
     if (entityInv.name === '' && !!model) {
-        entityInv.name = model.name
-        entityInv.type = model.metadata.get(0).type
+        inv.setProperty(k, 'name', model.name)
+        console.log(model.metadata)
+        inv.setProperty(k, 'type', model.metadata.type)
         entityInv.metadataList = model.metadata
         entityInv.cellList = model.cells
-        console.log(Object.keys(entityInv))
-        for (let j = 0; j < model.effects.count; ++j) {
-            console.log("effect name", model.effects.get(j).name)
-            effectsList.set(k, model.effects.get(j))
+        let j = 0
+        for (j = 0; j < model.effects.count; ++j) {
+            console.log("effect name", Object.entries(model.effects.get(j)))
+            effects.push(model.effects.get(j))
         }
+        console.log(effects, Object.entries(effectsList.get(k)))
+
+        // effectsList.remove(k, 1)
+        // effectsList.insert(k, [])
+
+        for (j = 0; j < effects.length; ++j) {
+            for (const l of Object.entries(effects[j])) {
+                if (!effectsList.get(k)[j]) effectsList.get(k)[j] = {}
+                effectsList.get(k)[j][l[0]] = l[1]
+            }
+        }
+        console.log(Object.entries(effectsList.get(k)).map((e)=>`${e[1].name} ${e[1].duration} ${e[1].identifier}`))
         levelModel.remove(item.entityIndex)
-        console.log('list1', effectsList)
         return true
     }
     return false
@@ -158,7 +172,9 @@ function dropItem(messageObject, cBuffer, controller) {
         const effectsList = cBuffer.fromModel.get(cBuffer.fromItem.position[0]).effectsList
         const meta = new Metadatas(metadataList.get(cBuffer.fromItem.position[1]))
         const cell = new Cells(cellList.get(cBuffer.fromItem.position[1]))
+        console.log("EL", Object.entries(effectsList.get(cBuffer.fromItem.position[1])))
         const effect = new Effects(effectsList.get(cBuffer.fromItem.position[1]))
+        console.log('Meta', Object.entries(meta.constr))
         levelModel.append({
                               'type': 'Item',
                               'name': meta.name,
@@ -180,7 +196,7 @@ function dropItem(messageObject, cBuffer, controller) {
         metadataList.setProperty(cBuffer.fromItem.position[1], 'name', '')
         metadataList.setProperty(cBuffer.fromItem.position[1], 'type', '')
         metadataList.set(cBuffer.fromItem.position[1], [])
-        effectsList.setProperty(cBuffer.fromItem.position[1], 'name', '')
+        effectsList.set(cBuffer.fromItem.position[1], [])
         cellList.set(cBuffer.fromItem.position[1], [])
         controller.cBufferClear(cBuffer)
     } else {
@@ -190,32 +206,34 @@ function dropItem(messageObject, cBuffer, controller) {
 
 class Effects {
     constructor(effect) {
-        this.constr = [{}]
-        if (!!effect.name) this.constr[0].name = effect.name
-        if (!!effect.mode) this.constr[0].mode = effect.mode
-        if (!!effect.characteristic) this.constr[0].characteristic = effect.characteristic
-        if (!!effect.type) this.constr[0].type = effect.type
-        if (!!effect.subtype) this.constr[0].subtype = effect.subtype
-        if (!!effect.duration) this.constr[0].duration = effect.duration
-        if (!!effect.period) this.constr[0].period = effect.period
-        if (!!effect.activation) this.constr[0].activation = effect.activation
-        if (!!effect.points) this.constr[0].points = effect.points
-        if (!!effect.identifier) this.constr[0].identifier = effect.identifier
+        this.constr = []
+        for (let l = 0; l < Object.keys(effect); ++l) {
+            if (!!effect.name) this.constr[l].name = effect.name
+            if (!!effect.mode) this.constr[l].mode = effect.mode
+            if (!!effect.characteristic) this.constr[l].characteristic = effect.characteristic
+            if (!!effect.type) this.constr[l].type = effect.type
+            if (!!effect.subtype) this.constr[l].subtype = effect.subtype
+            if (!!effect.duration) this.constr[l].duration = effect.duration
+            if (!!effect.period) this.constr[l].period = effect.period
+            if (!!effect.activation) this.constr[l].activation = effect.activation
+            if (!!effect.points) this.constr[l].points = effect.points
+            if (!!effect.identifier) this.constr[l].identifier = effect.identifier
+        }
     }
 }
 
 class Metadatas {
     constructor(meta) {
         this.name = meta.name
-        this.constr = [{}]
-        this.constr[0].name = meta.name
-        this.constr[0].type = meta.type
+        this.constr = {}
+        this.constr.name = meta.name
+        this.constr.type = meta.type
     }
 }
 
 class Cells {
     constructor(cell) {
-        this.constr = [{}]
-        this.constr[0].type = cell.type
+        this.constr = {}
+        this.constr.type = cell.type
     }
 }

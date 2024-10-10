@@ -1,10 +1,10 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
-import "config"
+import "config/routes.js" as Routes
 
 Window {
     id: window
-    readonly property var routes: Routes {}
+    readonly property var routes: new Routes.Routes()
     width: 640
     height: 480
     visible: true
@@ -16,6 +16,6 @@ Window {
         focus: true
         width: parent.width
         height: parent.height
-        source: routes.resources[0].mainMenu
+        source: routes.resources.mainMenu
     }
 }

@@ -1,25 +1,25 @@
 function actionStartGame() {
     mainMenu.model = startGameModel
-    menuLoader.source = `${routes.views[0].mainMenu}/StartGame.qml`
+    menuLoader.source = `${routes.views.mainMenu}/StartGame.qml`
 }
 
 function actionLoadGame() {
-    menuLoader.source = `${routes.views[0].mainMenu}/LoadGame.qml`
+    menuLoader.source = `${routes.views.mainMenu}/LoadGame.qml`
 }
 
 function actionMenu() {
     mainMenu.model = menuModel
-    menuLoader.source = `${routes.views[0].mainMenu}/Menu.qml`
+    menuLoader.source = `${routes.views.mainMenu}/Menu.qml`
 }
 
 function actionSettings() {
     mainMenu.model = settingsModel
-    menuLoader.source = `${routes.views[0].mainMenu}/Settings.qml`
+    menuLoader.source = `${routes.views.mainMenu}/Settings.qml`
 }
 
 function actionNewGame() {
     seed = [5,6,2,5,9,7,9,6]//seedGenerator()
-    mainLoader.source = routes.resources[0].game
+    mainLoader.source = routes.resources.game
 }
 
 function exit() {

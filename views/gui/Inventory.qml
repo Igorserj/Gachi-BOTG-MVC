@@ -2,7 +2,6 @@ import QtQuick 2.15
 import "../controls"
 
 Item {
-
     MouseArea {
         id: inventoryArea
         anchors.fill: parent
@@ -29,7 +28,7 @@ Item {
 
     WorkerScript {
         id: dropScript
-        source: `${routes.controllers[0].entities}/dropItemController.mjs`
+        source: `${routes.controllers.entities}/dropItemController.mjs`
         onMessage: (messageObject)=> hero.controller.dropItem(messageObject, cBuffer, controller)
     }
 }
